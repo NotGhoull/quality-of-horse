@@ -1,6 +1,7 @@
 package me.ghoul.qoh.mixin;
 
 import me.ghoul.qoh.Constants;
+import me.ghoul.qoh.IHorseWithChest;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -26,7 +27,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Horse.class)
-public abstract class HorseMixin extends AbstractHorse  {
+public abstract class HorseMixin extends AbstractHorse implements IHorseWithChest {
     @Unique
     private static final EntityDataAccessor<Boolean> DATA_HAS_CHEST = SynchedEntityData.defineId(HorseMixin.class, EntityDataSerializers.BOOLEAN);
 
@@ -38,6 +39,7 @@ public abstract class HorseMixin extends AbstractHorse  {
     protected void defineSynchedData(SynchedEntityData.Builder builder, CallbackInfo _ci) {
         builder.define(DATA_HAS_CHEST, false);
     }
+
     @Unique
     public boolean qoh$hasChest() { return this.entityData.get(DATA_HAS_CHEST); }
     @Unique
@@ -57,13 +59,13 @@ public abstract class HorseMixin extends AbstractHorse  {
             @Override
             public boolean set(@NotNull ItemStack stack) {
                 if (stack.isEmpty()) {
-                    if (qoh$hasChest()) {
+                    if (HorseMixin.this.qoh$hasChest()) {
                         qoh$setChest(false);
                         createInventory();
                     }
                     return true;
                 } else if (stack.is(Items.CHEST)) {
-                    if (!qoh$hasChest()) {
+                    if (!HorseMixin.this.qoh$hasChest()) {
                         qoh$setChest(true);
                         createInventory();
                     }
@@ -77,6 +79,7 @@ public abstract class HorseMixin extends AbstractHorse  {
 
     @Unique
     private void qoh$dropInventory() {
+        if(!this.level().isClientSide()) { return; }
         if (this.qoh$hasChest()) {
             for (int i = 1; i < this.inventory.getContainerSize(); ++i) {
                 ItemStack itemstack = this.inventory.getItem(i);
@@ -98,9 +101,8 @@ public abstract class HorseMixin extends AbstractHorse  {
         ItemStack stack = player.getItemInHand(hand);
 
         if (!this.qoh$hasChest() && stack.is(Items.CHEST) && this.isTamed()) {
-            this.equipChest(player, stack);
-            cir.setReturnValue(InteractionResult.SUCCESS);
-//            cir.setReturnValue(InteractionResult.sidedSuccess(this.level().isClientSide));
+            this.qoh$equipChest(player, stack);
+            cir.setReturnValue(InteractionResult.CONSUME);
         } else if (this.qoh$hasChest() && stack.isEmpty() && this.isTamed() && player.isCrouching()) {
             this.qoh$dropInventory();
             cir.setReturnValue(InteractionResult.SUCCESS);
@@ -148,15 +150,15 @@ public abstract class HorseMixin extends AbstractHorse  {
     }
 
     @Unique
-    private void equipChest(Player player, ItemStack chestStack) {
+    private void qoh$equipChest(Player player, ItemStack chestStack) {
         this.qoh$setChest(true);
-        this.playChestEquipSound();
+        this.qoh$playChestEquipSound();
         chestStack.consume(1, player);
         this.createInventory();
     }
 
     @Unique
-    private void playChestEquipSound() {
+    private void qoh$playChestEquipSound() {
         this.playSound(SoundEvents.DONKEY_CHEST, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
     }
 

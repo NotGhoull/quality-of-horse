@@ -7,7 +7,8 @@
   "mixins": [],
   "client": [
     "MixinMinecraft",
-    "HorseMixin"
+    "HorseMixin",
+    "HorseRendererMixin"
   ],
   "server": [
     "HorseMixin"
