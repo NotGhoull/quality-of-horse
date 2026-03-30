@@ -16,7 +16,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "me.example.qoh.Main"
+      "me.ghoul.qoh.Main"
     ]
   },
   "mixins": [
