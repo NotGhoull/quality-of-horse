@@ -1,15 +1,13 @@
-package me.ghoul.qoh.mixin;
+package me.ghoul.qoh.mixin.features;
 
-import me.ghoul.qoh.Constants;
-import me.ghoul.qoh.IHorseWithChest;
+import me.ghoul.qoh.qHorse;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.SlotAccess;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
@@ -24,14 +22,13 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Horse.class)
-public abstract class HorseMixin extends AbstractHorse implements IHorseWithChest {
+public abstract class HorseCanHaveChestMixin extends AbstractHorse implements qHorse {
     @Unique
-    private static final EntityDataAccessor<Boolean> DATA_HAS_CHEST = SynchedEntityData.defineId(HorseMixin.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> DATA_HAS_CHEST = SynchedEntityData.defineId(HorseCanHaveChestMixin.class, EntityDataSerializers.BOOLEAN);
 
-    protected HorseMixin(EntityType<? extends AbstractHorse> type, Level level) {
+    protected HorseCanHaveChestMixin(EntityType<? extends AbstractHorse> type, Level level) {
         super(type, level);
     }
 
@@ -53,19 +50,19 @@ public abstract class HorseMixin extends AbstractHorse implements IHorseWithChes
         return slot == 499 ? new SlotAccess() {
 
             public @NotNull ItemStack get() {
-                return HorseMixin.this.qoh$hasChest() ? new ItemStack(Items.CHEST) : ItemStack.EMPTY;
+                return HorseCanHaveChestMixin.this.qoh$hasChest() ? new ItemStack(Items.CHEST) : ItemStack.EMPTY;
             }
 
             @Override
             public boolean set(@NotNull ItemStack stack) {
                 if (stack.isEmpty()) {
-                    if (HorseMixin.this.qoh$hasChest()) {
+                    if (HorseCanHaveChestMixin.this.qoh$hasChest()) {
                         qoh$setChest(false);
                         createInventory();
                     }
                     return true;
                 } else if (stack.is(Items.CHEST)) {
-                    if (!HorseMixin.this.qoh$hasChest()) {
+                    if (!HorseCanHaveChestMixin.this.qoh$hasChest()) {
                         qoh$setChest(true);
                         createInventory();
                     }
@@ -77,9 +74,20 @@ public abstract class HorseMixin extends AbstractHorse implements IHorseWithChes
         } : super.getSlot(slot);
     }
 
+    @Override
+    public boolean qoh$tryChestInteraction(Player player, ItemStack stack) {
+        if (!this.qoh$hasChest() && stack.is(Items.CHEST) && this.isTamed()) {
+            this.qoh$equipChest(player, stack);
+            return true;
+        } else if (this.qoh$hasChest() && stack.isEmpty() && this.isTamed() && player.isCrouching()) {
+            this.qoh$dropInventory();
+            return true;
+        }
+        return false;
+    }
+
     @Unique
     private void qoh$dropInventory() {
-        if(!this.level().isClientSide()) { return; }
         if (this.qoh$hasChest()) {
             for (int i = 1; i < this.inventory.getContainerSize(); ++i) {
                 ItemStack itemstack = this.inventory.getItem(i);
@@ -95,18 +103,9 @@ public abstract class HorseMixin extends AbstractHorse implements IHorseWithChes
         }
     }
 
-    @Inject(method = "mobInteract", at = @At("HEAD"), cancellable = true)
-    private void mobInteract(Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
-        Constants.LOG.info("Interacting with horse! Has chest: {}", this.qoh$hasChest());
-        ItemStack stack = player.getItemInHand(hand);
-
-        if (!this.qoh$hasChest() && stack.is(Items.CHEST) && this.isTamed()) {
-            this.qoh$equipChest(player, stack);
-            cir.setReturnValue(InteractionResult.CONSUME);
-        } else if (this.qoh$hasChest() && stack.isEmpty() && this.isTamed() && player.isCrouching()) {
-            this.qoh$dropInventory();
-            cir.setReturnValue(InteractionResult.SUCCESS);
-        }
+    @Override
+    protected boolean canAddPassenger(@NotNull Entity pPassenger) {
+        return this.getPassengers().size() <= 2;
     }
 
     @Inject(method = "addAdditionalSaveData", at = @At("TAIL"))

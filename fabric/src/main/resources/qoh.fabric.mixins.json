@@ -6,7 +6,6 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [],
   "client": [
-    "me.example.qoh.mixin.MixinTitleScreen"
   ],
   "server": [],
   "injectors": {

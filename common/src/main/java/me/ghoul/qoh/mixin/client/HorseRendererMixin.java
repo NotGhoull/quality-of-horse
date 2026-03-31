@@ -1,4 +1,4 @@
-package me.ghoul.qoh.mixin;
+package me.ghoul.qoh.mixin.client;
 
 import me.ghoul.qoh.client.renderer.HorseChestLayer;
 import net.minecraft.client.model.HorseModel;
@@ -17,7 +17,7 @@ public abstract class HorseRendererMixin extends AbstractHorseRenderer<Horse, Ho
 
     @Inject(method = "<init>", at = @At("TAIL"))
     private void addChestLayer(CallbackInfo ci) {
-        this.addLayer(new HorseChestLayer(this));
+        this.addLayer(new HorseChestLayer<>(this));
     }
 }
 
