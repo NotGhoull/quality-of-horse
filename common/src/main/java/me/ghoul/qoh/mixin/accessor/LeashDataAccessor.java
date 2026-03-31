@@ -1,4 +1,4 @@
-package me.ghoul.qoh.mixin;
+package me.ghoul.qoh.mixin.accessor;
 
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Leashable;

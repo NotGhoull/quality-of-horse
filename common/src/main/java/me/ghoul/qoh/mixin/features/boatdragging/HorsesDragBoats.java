@@ -7,6 +7,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Leashable;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.horse.Horse;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 
@@ -20,6 +21,11 @@ public abstract class HorsesDragBoats extends Animal implements Leashable {
     @Override
     public void setLeashedTo(Entity pLeashHolder, boolean pBroadcastPacket) {
         Constants.LOG.info("setLeashedTo called for {}, leash holder: {}, broadcast: {}", this.getClass().getName(), pLeashHolder, pBroadcastPacket);
+        if (!(pLeashHolder instanceof Player)) {
+            super.setLeashedTo(pLeashHolder, pBroadcastPacket);
+            return;
+        }
+
         qPlayerLeashData data = (qPlayerLeashData) pLeashHolder;
         if (data == null) {
             Constants.LOG.warn("Leash holder {} does not implement qPlayerLeashData, cannot set leash target entity", pLeashHolder);

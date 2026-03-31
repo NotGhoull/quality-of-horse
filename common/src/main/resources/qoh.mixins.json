@@ -6,13 +6,14 @@
   "compatibilityLevel": "JAVA_18",
   "mixins": [
     "HorseInteractDispatcherMixin",
-    "LeashDataAccessor",
     "accessor.AbstractHorseAccessor",
+    "accessor.LeashDataAccessor",
     "features.HorseCanHaveChestMixin",
+    "features.HorseFollowsOwner",
     "features.HorseSwimMixin",
     "features.HorseTwoPlayerRideMixin",
-    "features.boatdragging.HorsesDragBoats",
     "features.boatdragging.BoatCanAcceptHorseLeash",
+    "features.boatdragging.HorsesDragBoats",
     "features.boatdragging.PlayerLeashMixin"
   ],
   "client": [
