@@ -1,8 +1,10 @@
 package me.ghoul.qoh.mixin.features;
 
+import me.ghoul.qoh.mixin.accessor.LeashDataAccessor;
 import me.ghoul.qoh.qHorse;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -13,6 +15,7 @@ import net.minecraft.world.entity.SlotAccess;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.animal.horse.Horse;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -79,9 +82,20 @@ public abstract class HorseCanHaveChestMixin extends AbstractHorse implements qH
         if (!this.qoh$hasChest() && stack.is(Items.CHEST) && this.isTamed()) {
             this.qoh$equipChest(player, stack);
             return true;
-        } else if (this.qoh$hasChest() && stack.isEmpty() && this.isTamed() && player.isCrouching()) {
+        } else if (this.qoh$hasChest() && stack.is(Items.SHEARS) && this.isTamed()) {
             this.qoh$dropInventory();
             return true;
+            // This should be moved to a different feature, but for now it's here
+        } else if (this.isTamed() && player.isCrouching() && stack.isEmpty()) {
+            if (!player.level().isClientSide()) {
+                if (getLeashData() != null) {
+                    // TODO: Translatable message
+                    player.displayClientMessage(Component.literal("[QoH] This horse already has a leash, unleash it first!"), true);
+                    return true;
+                }
+                setLeashedTo(player, true);
+                return true;
+            }
         }
         return false;
     }
