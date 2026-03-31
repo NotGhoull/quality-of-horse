@@ -6,10 +6,10 @@
   "mixins": [],
   "client": [
     "MixinTitleScreen",
-    "HorseMixin"
+    "features.HorseCanHaveChestMixin"
   ],
   "server": [
-    "HorseMixin"
+    "features.HorseCanHaveChestMixin"
   ],
   "injectors": {
     "defaultRequire": 1
