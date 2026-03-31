@@ -1,12 +1,10 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "org.example.qoh.mixin",
+  "package": "me.ghoul.qoh.mixin",
   "compatibilityLevel": "JAVA_18",
   "mixins": [],
-  "client": [
-    "me.example.qoh.mixin.MixinTitleScreen"
-  ],
+  "client": [],
   "server": [],
   "injectors": {
     "defaultRequire": 1

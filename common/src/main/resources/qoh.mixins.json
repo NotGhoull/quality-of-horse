@@ -6,9 +6,10 @@
   "compatibilityLevel": "JAVA_18",
   "mixins": [
     "HorseInteractDispatcherMixin",
-    "features.HorseTwoPlayerRideMixin",
     "accessor.AbstractHorseAccessor",
-    "features.HorseCanHaveChestMixin"
+    "features.HorseCanHaveChestMixin",
+    "features.HorseSwimMixin",
+    "features.HorseTwoPlayerRideMixin"
   ],
   "client": [
     "client.HorseRendererMixin"
