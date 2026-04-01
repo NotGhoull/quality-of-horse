@@ -13,5 +13,8 @@
   "yacl3.config.qoh:config.HorseFollowsOwner": "Enabled (Horse follows owner)",
   "yacl3.config.qoh:config.HorseStartsFollowingAt": "Start following at",
   "yacl3.config.qoh:config.HorseStopsFollowingAt": "Stop following at",
-  "yacl3.config.qoh:config.HorseFollowSpeedMult": "Follow speed multiplier"
+  "yacl3.config.qoh:config.HorseFollowSpeedMult": "Follow speed multiplier",
+
+  "painting.qoh.how_hungry.title": "How Hungry",
+  "painting.qoh.how_hungry.author": "Unknown"
 }
