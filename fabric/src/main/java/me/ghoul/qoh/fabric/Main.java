@@ -1,5 +1,7 @@
-package me.ghoul.qoh;
+package me.ghoul.qoh.fabric;
 
+import me.ghoul.qoh.CommonClass;
+import me.ghoul.qoh.Constants;
 import net.fabricmc.api.ModInitializer;
 
 public class Main implements ModInitializer {

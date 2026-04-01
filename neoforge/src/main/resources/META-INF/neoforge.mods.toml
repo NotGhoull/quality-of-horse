@@ -1,17 +1,16 @@
 modLoader = "javafml"
 loaderVersion = "[2,)"
-license = "MIT"
+license = "${license}"
 
 [[mods]]
 modId = "qoh"
 logoFile = "icon.png"
 version = "${version}"
-displayName = "Quality of Horse"
-authors = "NotGhoul"
-credits = "LieOnLion, adellive"
-description = '''
-A simple mod for improving horses
-'''
+displayName = "${name}"
+authors = "${author}"
+credits = "${credits}"
+description = '''${description}'''
+displayURL = "${home}"
 
 [[dependencies.qoh]]
 modId = "neoforge"
@@ -23,21 +22,21 @@ side = "BOTH"
 [[dependencies.qoh]]
 modId = "yet_another_config_lib_v3"
 mandatory = true
-versionRange = "[3.6.1,)"
+versionRange = "[${yaci},)"
 ordering = "NONE"
 side = "CLIENT"
 
 [[dependencies.qoh]]
 modId = "minecraft"
 type = "required"
-versionRange = "[1.21,)"
+versionRange = "[${mc_version},)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.qoh]]
 modId = "architectury"
 type = "required"
-versionRange = "[13.0.8,)"
+versionRange = "[${architectury},)"
 ordering = "AFTER"
 side = "BOTH"
 

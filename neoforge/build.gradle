@@ -42,7 +42,7 @@ dependencies {
 
     // If we try add it as an implementation, it breaks for some reason.
     // We'll fix it eventually
-    modCompileOnly "dev.isxander:yet-another-config-lib:3.6.2+1.21-neoforge"
+    modCompileOnly "dev.isxander:yet-another-config-lib:$yaci_version+$minecraft_version-neoforge"
 
     common(project(path: ':common', configuration: 'namedElements')) { transitive = false }
     shadowBundle project(path: ':common', configuration: 'transformProductionNeoForge')
@@ -52,7 +52,18 @@ processResources {
     inputs.property 'version', project.version
 
     filesMatching('META-INF/neoforge.mods.toml') {
-        expand version: project.version
+        expand (
+                version: version,
+                name: mod_name,
+                description: mod_description,
+                home: homepage,
+                author: mod_author,
+                credits: credits,
+                yaci: yaci_version,
+                license: mod_license,
+                architectury: architectury_api_version,
+                mc_version: minecraft_version
+        )
     }
 }
 

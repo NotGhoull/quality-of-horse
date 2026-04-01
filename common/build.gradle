@@ -10,5 +10,5 @@ dependencies {
 
     modImplementation "dev.architectury:architectury:$rootProject.architectury_api_version"
 
-    modImplementation "dev.isxander:yet-another-config-lib:3.6.2+1.21-fabric"
+    modImplementation "dev.isxander:yet-another-config-lib:$yaci_version+$minecraft_version-fabric"
 }
