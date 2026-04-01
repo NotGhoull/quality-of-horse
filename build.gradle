@@ -2,6 +2,7 @@ plugins {
     id 'dev.architectury.loom' version '1.14-SNAPSHOT' apply false
     id 'architectury-plugin' version '3.4-SNAPSHOT'
     id 'com.github.johnrengelman.shadow' version '8.1.1' apply false
+    id 'com.diffplug.spotless' version '8.4.0'
 }
 
 architectury {
@@ -11,6 +12,36 @@ architectury {
 allprojects {
     group = rootProject.maven_group
     version = rootProject.mod_version
+
+    repositories {
+        mavenCentral()
+    }
+}
+
+spotless {
+    format 'misc', {
+        target '*.gradle', '.gitattributes', '.gitignore'
+
+        trimTrailingWhitespace()
+        leadingTabsToSpaces()
+        endWithNewline()
+    }
+    java {
+        target('common/src/main/java/**/*.java', 'fabric/src/main/java/**/*.java', 'neoforge/src/main/java/**/*.java')
+
+        importOrder()
+
+        removeUnusedImports('cleanthat-javaparser-unnecessaryimport')
+        forbidWildcardImports()
+        forbidModuleImports()
+
+        cleanthat()
+
+        tableTestFormatter()
+        googleJavaFormat('1.35.0').aosp().skipJavadocFormatting().reflowLongStrings()
+
+        formatAnnotations()
+    }
 }
 
 subprojects {
@@ -24,9 +55,11 @@ subprojects {
 
     repositories {
         maven {
-            name 'Xander Maven'
-            url 'https://maven.isxander.dev/releases'
+            name = 'Xander Maven'
+            url = 'https://maven.isxander.dev/releases'
         }
+
+        mavenCentral()
     }
 
     dependencies {
@@ -51,9 +84,6 @@ subprojects {
                 artifactId = base.archivesName.get()
                 from components.java
             }
-        }
-
-        repositories {
         }
     }
 }
