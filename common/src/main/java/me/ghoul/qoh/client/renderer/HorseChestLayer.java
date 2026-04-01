@@ -19,6 +19,7 @@ import net.minecraft.world.entity.LivingEntity;
 
 // Credit to LieOnLion for help with this - Modified by Ghoul
 public class HorseChestLayer<T extends LivingEntity, M extends EntityModel<T>> extends RenderLayer<T, M> {
+
     private static final ResourceLocation CHEST = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "textures/chest.png");
     protected static final float HALF_PI = (float) Math.PI / 2.f;
 
