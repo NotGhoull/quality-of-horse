@@ -25,7 +25,7 @@ public abstract class HorseTwoPlayerRideMixin extends AbstractHorse implements q
 
     @Override
     public boolean qoh$tryTwoPlayerRide(Player player, ItemStack stack) {
-        if (this.isTamed() && this.getPassengers().size() < 2) {
+        if (this.isTamed() && this.getPassengers().size() < 2 && Constants.CONFIG.TwoPlayerRideEnabled) {
             this.doPlayerRide(player);
             return true;
         }

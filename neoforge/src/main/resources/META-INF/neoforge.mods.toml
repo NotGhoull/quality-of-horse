@@ -21,6 +21,13 @@ ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.qoh]]
+modId = "yet_another_config_lib_v3"
+mandatory = true
+versionRange = "[3.6.1,)"
+ordering = "NONE"
+side = "CLIENT"
+
+[[dependencies.qoh]]
 modId = "minecraft"
 type = "required"
 versionRange = "[1.21,)"

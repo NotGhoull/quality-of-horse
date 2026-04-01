@@ -1,0 +1,17 @@
+{
+  "yacl3.config.qoh:config.category.General": "General",
+
+  "yacl3.config.qoh:config.category.General.group.misc": "Misc settings",
+  "yacl3.config.qoh:config.CanHorsesSwim": "Can horses swim?",
+  "yacl3.config.qoh:config.TwoPlayerRideEnabled": "Can two (2) players ride on a horse?",
+
+  "yacl3.config.qoh:config.category.General.group.chest_settings": "Chest settings",
+  "yacl3.config.qoh:config.HorsesCanHaveChests": "Enabled (Horses have chests)",
+  "yacl3.config.qoh:config.inventoryColumns": "Inventory columns",
+
+  "yacl3.config.qoh:config.category.General.group.follow_settings": "Follow settings",
+  "yacl3.config.qoh:config.HorseFollowsOwner": "Enabled (Horse follows owner)",
+  "yacl3.config.qoh:config.HorseStartsFollowingAt": "Start following at",
+  "yacl3.config.qoh:config.HorseStopsFollowingAt": "Stop following at",
+  "yacl3.config.qoh:config.HorseFollowSpeedMult": "Follow speed multiplier"
+}

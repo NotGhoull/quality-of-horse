@@ -1,5 +1,6 @@
 package me.ghoul.qoh.mixin.features;
 
+import me.ghoul.qoh.Constants;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -24,6 +25,8 @@ public abstract class HorseSwimMixin extends LivingEntity {
 
     @Inject(method = "tickRidden", at = @At(value = "TAIL"))
     private void handleSwimming(Player player, Vec3 movement, CallbackInfo ci) {
+        if (!Constants.CONFIG.CanHorsesSwim) { return; }
+
         double fluidHeight;
         if (this.isInLava()) {
             fluidHeight = getFluidHeight(FluidTags.LAVA);
