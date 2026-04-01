@@ -15,11 +15,6 @@ public class Main {
     public Main(IEventBus eventBus) {
         CommonClass.init();
 
-        if (ModList.get().isLoaded("yet_another_config_lib_v3")) {
-            ModConfig.HANDLER.load();
-            Constants.SetConfig(ModConfig.HANDLER.instance());
-        }
-
         ModLoadingContext.get().registerExtensionPoint(
                 IConfigScreenFactory.class,
                 () -> (client, parent) -> ModConfig.HANDLER.generateGui().generateScreen(parent)
