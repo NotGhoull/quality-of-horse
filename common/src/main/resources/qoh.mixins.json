@@ -1,9 +1,7 @@
 {
   "required": true,
-  "minVersion": "0.8",
   "package": "me.ghoul.qoh.mixin",
-  "refmap": "${mod_id}.refmap.json",
-  "compatibilityLevel": "JAVA_18",
+  "compatibilityLevel": "JAVA_21",
   "mixins": [
     "HorseInteractDispatcherMixin",
     "accessor.AbstractHorseAccessor",
@@ -19,7 +17,6 @@
   "client": [
     "client.HorseRendererMixin"
   ],
-  "server": [],
   "injectors": {
     "defaultRequire": 1
   }
