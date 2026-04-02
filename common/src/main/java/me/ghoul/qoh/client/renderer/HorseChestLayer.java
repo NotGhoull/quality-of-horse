@@ -19,7 +19,8 @@ import net.minecraft.world.entity.LivingEntity;
 
 // Credit to LieOnLion for help with this - Modified by Ghoul
 public class HorseChestLayer<T extends LivingEntity, M extends EntityModel<T>> extends RenderLayer<T, M> {
-    private static final ResourceLocation CHEST = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "textures/chest.png");
+
+    private static final ResourceLocation CHEST = ResourceLocation.fromNamespaceAndPath("qoh", "textures/layer/chest.png");
     protected static final float HALF_PI = (float) Math.PI / 2.f;
 
     private final ModelPart chestModel;
@@ -31,7 +32,7 @@ public class HorseChestLayer<T extends LivingEntity, M extends EntityModel<T>> e
         CubeListBuilder cubeListBuilder = CubeListBuilder.create()
                 .texOffs(0, 0)
                 .addBox(-4, 0, -2, 8, 8, 3);
-        partDefinition.addOrReplaceChild("right_chest", cubeListBuilder, PartPose.offsetAndRotation(-6, 3, 5, 0, -HALF_PI, 0));
+        partDefinition.addOrReplaceChild("right_chest", cubeListBuilder, PartPose.offsetAndRotation(-7, 3, 5, 0, -HALF_PI, 0));
         partDefinition.addOrReplaceChild("left_chest", cubeListBuilder, PartPose.offsetAndRotation(6, 3, 5, 0, -HALF_PI, 0));
 
         this.chestModel = partDefinition.bake(22, 11);

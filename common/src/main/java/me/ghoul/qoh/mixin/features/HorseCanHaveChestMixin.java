@@ -1,5 +1,6 @@
 package me.ghoul.qoh.mixin.features;
 
+import me.ghoul.qoh.Constants;
 import me.ghoul.qoh.mixin.accessor.LeashDataAccessor;
 import me.ghoul.qoh.qHorse;
 import net.minecraft.nbt.CompoundTag;
@@ -46,7 +47,7 @@ public abstract class HorseCanHaveChestMixin extends AbstractHorse implements qH
     public void qoh$setChest(boolean chested) { this.entityData.set(DATA_HAS_CHEST, chested); }
 
     @Unique
-    public int getInventoryColumns() { return this.qoh$hasChest() ? 5 : 0; };
+    public int getInventoryColumns() { return this.qoh$hasChest() ? Constants.CONFIG.inventoryColumns : 0; };
 
     @Override
     public @NotNull SlotAccess getSlot(int slot) {
@@ -79,6 +80,8 @@ public abstract class HorseCanHaveChestMixin extends AbstractHorse implements qH
 
     @Override
     public boolean qoh$tryChestInteraction(Player player, ItemStack stack) {
+        if (!Constants.CONFIG.HorsesCanHaveChests) { return false; }
+
         if (!this.qoh$hasChest() && stack.is(Items.CHEST) && this.isTamed()) {
             this.qoh$equipChest(player, stack);
             return true;
@@ -88,6 +91,7 @@ public abstract class HorseCanHaveChestMixin extends AbstractHorse implements qH
             // This should be moved to a different feature, but for now it's here
         } else if (this.isTamed() && player.isCrouching() && stack.isEmpty()) {
             if (!player.level().isClientSide()) {
+                // TODO: Move this
                 if (getLeashData() != null) {
                     // TODO: Translatable message
                     player.displayClientMessage(Component.literal("[QoH] This horse already has a leash, unleash it first!"), true);
@@ -115,11 +119,6 @@ public abstract class HorseCanHaveChestMixin extends AbstractHorse implements qH
 
             qoh$setChest(false);
         }
-    }
-
-    @Override
-    protected boolean canAddPassenger(@NotNull Entity pPassenger) {
-        return this.getPassengers().size() <= 2;
     }
 
     @Inject(method = "addAdditionalSaveData", at = @At("TAIL"))
