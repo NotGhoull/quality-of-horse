@@ -25,7 +25,9 @@ public abstract class HorseSwimMixin extends LivingEntity {
 
     @Inject(method = "tickRidden", at = @At(value = "TAIL"))
     private void handleSwimming(Player player, Vec3 movement, CallbackInfo ci) {
-        if (!Constants.CONFIG.CanHorsesSwim) { return; }
+        if (!Constants.CONFIG.CanHorsesSwim) {
+            return;
+        }
 
         double fluidHeight;
         if (this.isInLava()) {
@@ -38,9 +40,11 @@ public abstract class HorseSwimMixin extends LivingEntity {
             qoh$swimTickCount++;
 
             if (isInWater()) {
-                setDeltaMovement(getDeltaMovement().add(0., (fluidHeight > 0.8 ? 0.04 : 0.01), 0.0));
+                setDeltaMovement(
+                        getDeltaMovement().add(0., (fluidHeight > 0.8 ? 0.04 : 0.01), 0.0));
             } else if (isInLava()) {
-                setDeltaMovement(getDeltaMovement().add(0., (fluidHeight > 0.8 ? 0.11 : 0.0275), 0.0));
+                setDeltaMovement(
+                        getDeltaMovement().add(0., (fluidHeight > 0.8 ? 0.11 : 0.0275), 0.0));
             } else {
                 qoh$swimTickCount = 0;
             }
@@ -48,7 +52,6 @@ public abstract class HorseSwimMixin extends LivingEntity {
             if (qoh$swimTickCount == 30) {
                 qoh$swimTickCount = 0;
             }
-
         }
     }
 
@@ -57,4 +60,3 @@ public abstract class HorseSwimMixin extends LivingEntity {
         return false;
     }
 }
-

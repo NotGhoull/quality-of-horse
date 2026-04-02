@@ -1,7 +1,6 @@
 package me.ghoul.qoh.mixin.features;
 
 import me.ghoul.qoh.Constants;
-import me.ghoul.qoh.mixin.accessor.LeashDataAccessor;
 import me.ghoul.qoh.qHorse;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -10,13 +9,11 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.SlotAccess;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.animal.horse.Horse;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -29,8 +26,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Horse.class)
 public abstract class HorseCanHaveChestMixin extends AbstractHorse implements qHorse {
-    @Unique
-    private static final EntityDataAccessor<Boolean> DATA_HAS_CHEST = SynchedEntityData.defineId(HorseCanHaveChestMixin.class, EntityDataSerializers.BOOLEAN);
+    @Unique private static final EntityDataAccessor<Boolean> DATA_HAS_CHEST =
+            SynchedEntityData.defineId(HorseCanHaveChestMixin.class, EntityDataSerializers.BOOLEAN);
 
     protected HorseCanHaveChestMixin(EntityType<? extends AbstractHorse> type, Level level) {
         super(type, level);
@@ -41,46 +38,57 @@ public abstract class HorseCanHaveChestMixin extends AbstractHorse implements qH
         builder.define(DATA_HAS_CHEST, false);
     }
 
-    @Unique
-    public boolean qoh$hasChest() { return this.entityData.get(DATA_HAS_CHEST); }
-    @Unique
-    public void qoh$setChest(boolean chested) { this.entityData.set(DATA_HAS_CHEST, chested); }
+    @Unique public boolean qoh$hasChest() {
+        return this.entityData.get(DATA_HAS_CHEST);
+    }
 
-    @Unique
-    public int getInventoryColumns() { return this.qoh$hasChest() ? Constants.CONFIG.inventoryColumns : 0; };
+    @Unique public void qoh$setChest(boolean chested) {
+        this.entityData.set(DATA_HAS_CHEST, chested);
+    }
+
+    @Unique public int getInventoryColumns() {
+        return this.qoh$hasChest() ? Constants.CONFIG.inventoryColumns : 0;
+    }
+    ;
 
     @Override
     public @NotNull SlotAccess getSlot(int slot) {
-        return slot == 499 ? new SlotAccess() {
+        return slot == 499
+                ? new SlotAccess() {
 
-            public @NotNull ItemStack get() {
-                return HorseCanHaveChestMixin.this.qoh$hasChest() ? new ItemStack(Items.CHEST) : ItemStack.EMPTY;
-            }
+                    public @NotNull ItemStack get() {
+                        return HorseCanHaveChestMixin.this.qoh$hasChest()
+                                ? new ItemStack(Items.CHEST)
+                                : ItemStack.EMPTY;
+                    }
 
-            @Override
-            public boolean set(@NotNull ItemStack stack) {
-                if (stack.isEmpty()) {
-                    if (HorseCanHaveChestMixin.this.qoh$hasChest()) {
-                        qoh$setChest(false);
-                        createInventory();
+                    @Override
+                    public boolean set(@NotNull ItemStack stack) {
+                        if (stack.isEmpty()) {
+                            if (HorseCanHaveChestMixin.this.qoh$hasChest()) {
+                                qoh$setChest(false);
+                                createInventory();
+                            }
+                            return true;
+                        } else if (stack.is(Items.CHEST)) {
+                            if (!HorseCanHaveChestMixin.this.qoh$hasChest()) {
+                                qoh$setChest(true);
+                                createInventory();
+                            }
+                            return true;
+                        } else {
+                            return false;
+                        }
                     }
-                    return true;
-                } else if (stack.is(Items.CHEST)) {
-                    if (!HorseCanHaveChestMixin.this.qoh$hasChest()) {
-                        qoh$setChest(true);
-                        createInventory();
-                    }
-                    return true;
-                } else {
-                    return false;
                 }
-            }
-        } : super.getSlot(slot);
+                : super.getSlot(slot);
     }
 
     @Override
     public boolean qoh$tryChestInteraction(Player player, ItemStack stack) {
-        if (!Constants.CONFIG.HorsesCanHaveChests) { return false; }
+        if (!Constants.CONFIG.HorsesCanHaveChests) {
+            return false;
+        }
 
         if (!this.qoh$hasChest() && stack.is(Items.CHEST) && this.isTamed()) {
             this.qoh$equipChest(player, stack);
@@ -94,7 +102,10 @@ public abstract class HorseCanHaveChestMixin extends AbstractHorse implements qH
                 // TODO: Move this
                 if (getLeashData() != null) {
                     // TODO: Translatable message
-                    player.displayClientMessage(Component.literal("[QoH] This horse already has a leash, unleash it first!"), true);
+                    player.displayClientMessage(
+                            Component.literal(
+                                    "[QoH] This horse already has a leash, unleash it first!"),
+                            true);
                     return true;
                 }
                 setLeashedTo(player, true);
@@ -104,8 +115,7 @@ public abstract class HorseCanHaveChestMixin extends AbstractHorse implements qH
         return false;
     }
 
-    @Unique
-    private void qoh$dropInventory() {
+    @Unique private void qoh$dropInventory() {
         if (this.qoh$hasChest()) {
             for (int i = 1; i < this.inventory.getContainerSize(); ++i) {
                 ItemStack itemstack = this.inventory.getItem(i);
@@ -153,7 +163,11 @@ public abstract class HorseCanHaveChestMixin extends AbstractHorse implements qH
                 CompoundTag cTag = listTag.getCompound(i);
                 int j = cTag.getByte("Slot") & 255;
                 if (j < this.inventory.getContainerSize() - 1) {
-                    this.inventory.setItem(j + 1, (ItemStack) ItemStack.parse(this.registryAccess(), cTag).orElse(ItemStack.EMPTY));
+                    this.inventory.setItem(
+                            j + 1,
+                            (ItemStack)
+                                    ItemStack.parse(this.registryAccess(), cTag)
+                                            .orElse(ItemStack.EMPTY));
                 }
             }
         }
@@ -161,18 +175,17 @@ public abstract class HorseCanHaveChestMixin extends AbstractHorse implements qH
         this.syncSaddleToClients();
     }
 
-    @Unique
-    private void qoh$equipChest(Player player, ItemStack chestStack) {
+    @Unique private void qoh$equipChest(Player player, ItemStack chestStack) {
         this.qoh$setChest(true);
         this.qoh$playChestEquipSound();
         chestStack.consume(1, player);
         this.createInventory();
     }
 
-    @Unique
-    private void qoh$playChestEquipSound() {
-        this.playSound(SoundEvents.DONKEY_CHEST, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+    @Unique private void qoh$playChestEquipSound() {
+        this.playSound(
+                SoundEvents.DONKEY_CHEST,
+                1.0F,
+                (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
     }
-
-
 }

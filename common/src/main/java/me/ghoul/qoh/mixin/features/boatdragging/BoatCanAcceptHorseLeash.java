@@ -34,7 +34,8 @@ public abstract class BoatCanAcceptHorseLeash extends Entity implements Leashabl
         // Do nothing, we won't drop the leash here
         // Possible config? LeadsBreakWhenTooFar
 
-        // LeashData must exist here, since this is only called when the leash is active, so we can safely access it
+        // LeashData must exist here, since this is only called when the leash is active, so we can
+        // safely access it
         // Config? BoatCanTpWhenTooFar
         assert leashData != null;
         Entity leashHolder = leashData.leashHolder;
@@ -56,12 +57,11 @@ public abstract class BoatCanAcceptHorseLeash extends Entity implements Leashabl
     @Shadow
     public abstract void setLeashData(@Nullable Leashable.LeashData leashData);
 
-    @Shadow
-    @Nullable
-    private Leashable.LeashData leashData;
+    @Shadow @Nullable private Leashable.LeashData leashData;
 
     @Inject(method = "interact", at = @At("HEAD"), cancellable = true)
-    private void interact(Player pPlayer, InteractionHand pHand, CallbackInfoReturnable<InteractionResult> cir) {
+    private void interact(
+            Player pPlayer, InteractionHand pHand, CallbackInfoReturnable<InteractionResult> cir) {
         // This is safe because we know pPlayer will implement it because of the mixin
         qPlayerLeashData data = (qPlayerLeashData) pPlayer;
         Entity owner = data.getLeashTargetEntity();
@@ -78,16 +78,17 @@ public abstract class BoatCanAcceptHorseLeash extends Entity implements Leashabl
 
                 ServerLevel serverLevel = (ServerLevel) level();
                 // Unlink the player from the horse
-                serverLevel.getChunkSource().broadcastAndSend(this, new ClientboundSetEntityLinkPacket(owner, null));
+                serverLevel
+                        .getChunkSource()
+                        .broadcastAndSend(this, new ClientboundSetEntityLinkPacket(owner, null));
 
-                serverLevel.getChunkSource().broadcastAndSend(this, new ClientboundSetEntityLinkPacket(this, owner));
-
+                serverLevel
+                        .getChunkSource()
+                        .broadcastAndSend(this, new ClientboundSetEntityLinkPacket(this, owner));
 
                 Constants.LOG.info("Boat leash data set to {}", _leashData);
                 cir.setReturnValue(InteractionResult.SUCCESS);
             }
         }
-
     }
-
 }

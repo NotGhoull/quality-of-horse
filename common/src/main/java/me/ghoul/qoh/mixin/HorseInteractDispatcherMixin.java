@@ -16,8 +16,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(Horse.class)
 public class HorseInteractDispatcherMixin {
 
-    @Inject(method = "mobInteract", at=@At("HEAD"), cancellable = true)
-    private void onMobInteract(Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
+    @Inject(method = "mobInteract", at = @At("HEAD"), cancellable = true)
+    private void onMobInteract(
+            Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
         ItemStack stack = player.getItemInHand(hand);
 
         qHorse horse = (qHorse) this;

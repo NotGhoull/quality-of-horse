@@ -1,5 +1,6 @@
 package me.ghoul.qoh.goals;
 
+import java.util.EnumSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -10,8 +11,6 @@ import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.pathfinder.PathType;
-
-import java.util.EnumSet;
 
 public class HorseFollowsOwnerGoal extends Goal {
     private final AbstractHorse horse;
@@ -26,8 +25,8 @@ public class HorseFollowsOwnerGoal extends Goal {
 
     protected final RandomSource random;
 
-
-    public HorseFollowsOwnerGoal(AbstractHorse horse, double pSpeedModifier, float pStartDistance, float pStopDistance) {
+    public HorseFollowsOwnerGoal(
+            AbstractHorse horse, double pSpeedModifier, float pStartDistance, float pStopDistance) {
         this.horse = horse;
         this.random = RandomSource.create();
         this.speedModifier = pSpeedModifier;
@@ -35,7 +34,8 @@ public class HorseFollowsOwnerGoal extends Goal {
         this.startDistance = pStartDistance;
         this.stopDistance = pStopDistance;
         this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
-        if (!(horse.getNavigation() instanceof GroundPathNavigation) && !(horse.getNavigation() instanceof FlyingPathNavigation)) {
+        if (!(horse.getNavigation() instanceof GroundPathNavigation)
+                && !(horse.getNavigation() instanceof FlyingPathNavigation)) {
             throw new IllegalArgumentException("Unsupported mob type for FollowOwnerGoal");
         }
     }
@@ -47,7 +47,8 @@ public class HorseFollowsOwnerGoal extends Goal {
             return false;
         } else if (this.unableToMoveToOwner()) {
             return false;
-        } else if (this.horse.distanceToSqr(entity) < (double) (this.startDistance * this.startDistance)) {
+        } else if (this.horse.distanceToSqr(entity)
+                < (double) (this.startDistance * this.startDistance)) {
             return false;
         } else {
             this.owner = entity;
@@ -63,7 +64,9 @@ public class HorseFollowsOwnerGoal extends Goal {
         if (this.navigation.isDone()) {
             return false;
         } else {
-            return !unableToMoveToOwner() && !(this.horse.distanceToSqr(this.owner) <= (double) (this.stopDistance * this.stopDistance));
+            return !unableToMoveToOwner()
+                    && !(this.horse.distanceToSqr(this.owner)
+                            <= (double) (this.stopDistance * this.stopDistance));
         }
     }
 
@@ -82,7 +85,9 @@ public class HorseFollowsOwnerGoal extends Goal {
     public void tick() {
         boolean flag = shouldTryTeleportToOwner();
         if (!flag) {
-            this.horse.getLookControl().setLookAt(this.owner, 10.0F, (float)this.horse.getMaxHeadXRot());
+            this.horse
+                    .getLookControl()
+                    .setLookAt(this.owner, 10.0F, (float) this.horse.getMaxHeadXRot());
         }
 
         if (--this.timeToRecalcPath <= 0) {
@@ -104,7 +109,7 @@ public class HorseFollowsOwnerGoal extends Goal {
     public void tryTeleportToOwner() {
         LivingEntity entity = this.horse.getOwner();
         if (entity != null) {
-// Get the position of the entity
+            // Get the position of the entity
             BlockPos entityPos = entity.blockPosition();
             Level level = entity.level();
 
@@ -113,7 +118,9 @@ public class HorseFollowsOwnerGoal extends Goal {
             for (int y = entityPos.getY(); y >= level.getMinBuildHeight(); y--) {
                 BlockPos checkPos = new BlockPos(entityPos.getX(), y, entityPos.getZ());
                 if (!level.getBlockState(checkPos).isAir()) {
-                    if (level.getBlockState(checkPos).getCollisionShape(level, checkPos).isEmpty()) {
+                    if (level.getBlockState(checkPos)
+                            .getCollisionShape(level, checkPos)
+                            .isEmpty()) {
                         continue; // Skip blocks that don't have a collision shape
                     }
                     targetPos = checkPos.above(); // Found the closest non-air block
@@ -127,6 +134,4 @@ public class HorseFollowsOwnerGoal extends Goal {
             }
         }
     }
-
-
 }

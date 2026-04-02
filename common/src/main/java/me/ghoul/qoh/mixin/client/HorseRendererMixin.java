@@ -11,7 +11,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(HorseRenderer.class)
 public abstract class HorseRendererMixin extends AbstractHorseRenderer<Horse, HorseModel<Horse>> {
-    public HorseRendererMixin(EntityRendererProvider.Context pContext, HorseModel<Horse> pModel, float pScale) {
+    public HorseRendererMixin(
+            EntityRendererProvider.Context pContext, HorseModel<Horse> pModel, float pScale) {
         super(pContext, pModel, pScale);
     }
 
@@ -20,5 +21,3 @@ public abstract class HorseRendererMixin extends AbstractHorseRenderer<Horse, Ho
         this.addLayer(new HorseChestLayer<>(this));
     }
 }
-
-
