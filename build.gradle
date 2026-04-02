@@ -18,31 +18,31 @@ allprojects {
     }
 }
 
-spotless {
-    format 'misc', {
-        target '*.gradle', '.gitattributes', '.gitignore'
-
-        trimTrailingWhitespace()
-        leadingTabsToSpaces()
-        endWithNewline()
-    }
-    java {
-        target('common/src/main/java/**/*.java', 'fabric/src/main/java/**/*.java', 'neoforge/src/main/java/**/*.java')
-
-        importOrder()
-
-        removeUnusedImports('cleanthat-javaparser-unnecessaryimport')
-        forbidWildcardImports()
-        forbidModuleImports()
-
-        cleanthat()
-
-        tableTestFormatter()
-        googleJavaFormat('1.35.0').aosp().skipJavadocFormatting().reflowLongStrings()
-
-        formatAnnotations()
-    }
-}
+//spotless {
+//    format 'misc', {
+//        target '*.gradle', '.gitattributes', '.gitignore'
+//
+//        trimTrailingWhitespace()
+//        leadingTabsToSpaces()
+//        endWithNewline()
+//    }
+//    java {
+//        target('common/src/main/java/**/*.java', 'fabric/src/main/java/**/*.java', 'neoforge/src/main/java/**/*.java')
+//
+//        importOrder()
+//
+//        removeUnusedImports('cleanthat-javaparser-unnecessaryimport')
+//        forbidWildcardImports()
+//        forbidModuleImports()
+//
+//        cleanthat()
+//
+//        tableTestFormatter()
+//        googleJavaFormat('1.35.0').aosp().skipJavadocFormatting().reflowLongStrings()
+//
+//        formatAnnotations()
+//    }
+//}
 
 subprojects {
     apply plugin: 'dev.architectury.loom'
@@ -50,7 +50,7 @@ subprojects {
     apply plugin: 'maven-publish'
 
     base {
-        archivesName = "$rootProject.archives_name-$project.name"
+        archivesName = "$rootProject.archives_name-$project.name-$rootProject.version+$rootProject.minecraft_version"
     }
 
     repositories {

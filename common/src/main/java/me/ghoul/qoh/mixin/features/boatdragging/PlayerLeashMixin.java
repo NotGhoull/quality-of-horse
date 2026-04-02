@@ -8,9 +8,7 @@ import org.spongepowered.asm.mixin.Unique;
 
 @Mixin(Player.class)
 public class PlayerLeashMixin implements qPlayerLeashData {
-    @Unique
-    Entity target;
-
+    @Unique Entity target;
 
     @Override
     public void setLeashTargetEntity(Entity entity) {

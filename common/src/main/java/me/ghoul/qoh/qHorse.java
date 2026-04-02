@@ -8,7 +8,8 @@ public interface qHorse {
 
     default boolean qoh$tryTwoPlayerRide(Player player, ItemStack stack) {
         return false;
-    };
+    }
+    ;
 
     default boolean qoh$tryChestInteraction(Player player, ItemStack stack) {
         return false;

@@ -12,5 +12,4 @@ public interface LeashDataAccessor {
     static Leashable.LeashData create(Entity leashHolder) {
         throw new AssertionError();
     }
-
 }
