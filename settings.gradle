@@ -9,7 +9,7 @@ pluginManagement {
     }
 }
 
-rootProject.name = 'untitled'
+rootProject.name = 'qoh'
 
 include 'common'
 include 'fabric'
