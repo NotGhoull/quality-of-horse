@@ -1,5 +1,6 @@
 package me.ghoul.qoh.mixin.features;
 
+import me.ghoul.qoh.CommonClass;
 import me.ghoul.qoh.Constants;
 import me.ghoul.qoh.mixin.accessor.AbstractHorseAccessor;
 import me.ghoul.qoh.qHorse;
@@ -27,7 +28,8 @@ public abstract class HorseTwoPlayerRideMixin extends AbstractHorse implements q
     public boolean qoh$tryTwoPlayerRide(Player player, ItemStack stack) {
         if (this.isTamed()
                 && this.getPassengers().size() < 2
-                && Constants.CONFIG.TwoPlayerRideEnabled) {
+                && Constants.CONFIG.TwoPlayerRideEnabled
+                && !stack.is(CommonClass.OWNER_TAG)) {
             this.doPlayerRide(player);
             return true;
         }

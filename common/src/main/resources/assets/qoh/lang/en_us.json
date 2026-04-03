@@ -1,4 +1,6 @@
 {
+  "item.qoh.owner_tag": "Owner Tag",
+
   "yacl3.config.qoh:config.category.General": "General",
 
   "yacl3.config.qoh:config.category.General.group.misc": "Misc settings",
