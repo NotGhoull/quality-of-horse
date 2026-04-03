@@ -22,6 +22,7 @@ import net.minecraft.world.item.TooltipFlag;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Objects;
 
 public class OwnerTagItem extends Item {
     private static final Gson GSON = new Gson();
@@ -30,27 +31,31 @@ public class OwnerTagItem extends Item {
     @Override
     public @NotNull InteractionResult interactLivingEntity(ItemStack itemStack, Player player, LivingEntity livingEntity, InteractionHand interactionHand) {
         if (livingEntity instanceof Horse horse) {
-            if (!horse.isTamed() && !horse.getOwner().equals(player.getUUID())) {
-                player.displayClientMessage(Component.literal("This horse is not tamed or you are not the owner!"), true);
-                return InteractionResult.FAIL;
-            }
-            // Level upset because of ''Level' used without 'try'-with-resources statement'
-            if (player.level().isClientSide()) {
-                return InteractionResult.sidedSuccess(true);
-            }
-
-            Gson gson = new Gson();
-            itemStack.set(ModComponents.TEST_COMPONENT.get(), horse.getStringUUID());
-            itemStack.set(ModComponents.HORSE_NAME_COMPONENT.get(), serializeComponent(horse.getName()));
-            itemStack.set(ModComponents.HORSE_OWNER_NAME_COMPONENT.get(),  serializeComponent(horse.getOwner().getName()));
-            itemStack.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true);
-
-            player.displayClientMessage(Component.literal("Bound to horse ").append(horse.getName()), true);
-            return InteractionResult.SUCCESS;
+            return handleHorseInteraction(itemStack, livingEntity, player, horse);
         }
 
         // Eventually we'd do logic for transferring ownership here, but for now we just pass
         return InteractionResult.PASS;
+    }
+
+    private InteractionResult handleHorseInteraction(ItemStack itemStack, LivingEntity livingEntity, Player player, Horse horse) {
+        if (!isHorseInteractable(horse, player)) {
+            player.displayClientMessage(Component.translatable("message.qoh.not_tamed_or_owner"), true);
+            return InteractionResult.FAIL;
+        }
+
+        if (player.level().isClientSide()) {
+            return InteractionResult.sidedSuccess(true);
+        }
+
+        if (!bindHorseToItem(itemStack, horse)) {
+            player.displayClientMessage(Component.translatable("message.qoh.binding_error"), false);
+            return InteractionResult.FAIL;
+        }
+
+        player.displayClientMessage(Component.translatable("message.qoh.bound_success", horse.getName()), true);
+        return InteractionResult.SUCCESS;
+
     }
 
     private String serializeComponent(Component component) {
@@ -61,45 +66,72 @@ public class OwnerTagItem extends Item {
         return ComponentSerialization.CODEC.decode(JsonOps.INSTANCE, GSON.fromJson(json, JsonElement.class)).getOrThrow().getFirst();
     }
 
+    private boolean isHorseInteractable(Horse horse, Player player) {
+        return horse.isTamed() && Objects.equals(horse.getOwner(), player);
+    }
+
+    private boolean bindHorseToItem(ItemStack itemStack, Horse horse) {
+        String horseUUID = horse.getStringUUID();
+        String horseNameJson = serializeComponent(horse.getName());
+        String ownerNameJson;
+        try {
+            //noinspection DataFlowIssue - We handle it in the try
+            ownerNameJson = serializeComponent(horse.getOwner().getName());
+        } catch (NullPointerException npe) {
+            Constants.LOG.error("Horse {} has no owner, cannot bind to item!", horseUUID);
+            return false;
+        }
+
+        itemStack.set(ModComponents.TEST_COMPONENT.get(), horseUUID);
+        itemStack.set(ModComponents.HORSE_NAME_COMPONENT.get(), horseNameJson);
+        itemStack.set(ModComponents.HORSE_OWNER_NAME_COMPONENT.get(), ownerNameJson);
+        itemStack.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true);
+        return true;
+    }
+
 
     @Override
     public void appendHoverText(ItemStack itemStack, TooltipContext tooltipContext, List<Component> list, TooltipFlag tooltipFlag) {
         var horseName = itemStack.getOrDefault(ModComponents.HORSE_NAME_COMPONENT.get(), "No name");
         var ownerName = itemStack.getOrDefault(ModComponents.HORSE_OWNER_NAME_COMPONENT.get(), "No owner");
         var horseUUID = itemStack.getOrDefault(ModComponents.TEST_COMPONENT.get(), "<null>");
-        Gson gson = new Gson();
 
         if ("<null>".equals(horseUUID)) {
-            list.add(Component.literal("§cNot bound to any horse").withStyle(Style.EMPTY.withBold(true).withItalic(true)));
+            list.add(Component.translatable("lore.qoh.not_bound").withStyle(Style.EMPTY
+                    .withBold(true)
+                    .withItalic(true)
+                    .withColor(ChatFormatting.RED))
+            );
             return;
         }
 
         var horseNameComponent = deserializeComponent(horseName);
         var ownerNameComponent = deserializeComponent(ownerName);
 
-        list.add(Component.literal("Bound horse").withStyle(Style.EMPTY.withItalic(true).withColor(ChatFormatting.GRAY)));
+        list.add(Component.translatable("lore.qoh.bound_notice").withStyle(Style.EMPTY.withItalic(true).withColor(ChatFormatting.GRAY)));
 
-        list.add(Component.literal(" ┣ Bound to horse: ")
-                .withStyle(
-                        Style.EMPTY
-                                .withColor(ChatFormatting.GREEN))
-                .append(horseNameComponent.copy()
+        list.add(Component.translatable("lore.qoh.bound_to", " ┣",
+                        horseNameComponent.copy()
+                                .withStyle(
+                                        Style.EMPTY
+                                                .withBold(true)
+                                                .withColor(ChatFormatting.WHITE)))
                         .withStyle(
                                 Style.EMPTY
-                                        .withBold(true)
-                                        .withColor(ChatFormatting.WHITE))));
+                                        .withColor(ChatFormatting.GREEN)));
 
-        list.add(Component.literal(" ┗ Original Owner: ")
+        list.add(Component.translatable(
+                "lore.qoh.original_owner", " ┗",
+                        ownerNameComponent.copy()
+                                .withStyle(Style.EMPTY
+                                        .withBold(true)
+                                        .withColor(ChatFormatting.WHITE)))
                 .withStyle(Style.EMPTY
-                        .withColor(ChatFormatting.YELLOW))
-                .append(ownerNameComponent.copy()
-                        .withStyle(Style.EMPTY
-                                .withBold(true)
-                                .withColor(ChatFormatting.WHITE))));
+                        .withColor(ChatFormatting.YELLOW)));
 
         list.add(Component.empty());
 
-        list.add(Component.literal("To transfer ownership, right-click the horse as the owner, then right-click the new owner.")
+        list.add(Component.translatable("lore.qoh.transfer_tip")
                 .withStyle(Style.EMPTY
                         .withItalic(true)
                         .withColor(ChatFormatting.DARK_GRAY)));
