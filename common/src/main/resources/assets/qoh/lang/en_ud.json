@@ -1,0 +1,33 @@
+{
+  "qoh.itemgroup.main": "ǝsɹoH ɟo ʎʇᴉlɐnQ",
+  "item.qoh.owner_tag": "ƃɐ┴ ɹǝuʍO",
+
+  "message.qoh.not_tamed_or_owner": "¡ɹǝuʍo ǝɥʇ ʇou ǝɹɐ noʎ ɹo pǝɯɐʇ ʇou sᴉ ǝsɹoɥ sᴉɥ┴ [HoQ]",
+  "message.qoh.binding_error": "˙slᴉɐʇǝp ɹoɟ sƃol ʞɔǝɥƆ ¡ǝsɹoɥ oʇ puᴉq oʇ pǝlᴉɐℲ [HoQ]",
+  "message.qoh.bound_success": "s$1% ǝsɹoɥ oʇ punoq [HoQ]",
+
+  "lore.qoh.not_bound": "ǝsɹoɥ ʎuɐ oʇ punoq ʇoN",
+  "lore.qoh.bound_notice": "ǝsɹoɥ punoq",
+  "lore.qoh.bound_to": "$2% :ǝsɹoɥ oʇ punoq s$1%",
+  "lore.qoh.original_owner": "s$2% :ɹǝuʍo lɐuᴉƃᴉɹO s$1%",
+  "lore.qoh.transfer_tip": "˙ɹǝuʍo ʍǝu ǝɥʇ ʞɔᴉlɔ-ʇɥƃᴉɹ uǝɥʇ 'ɹǝuʍo ǝɥʇ sɐ ǝsɹoɥ ǝɥʇ ʞɔᴉlɔ-ʇɥƃᴉɹ 'dᴉɥsɹǝuʍo ɹǝɟsuɐɹʇ o┴",
+
+  "yacl3.config.qoh:config.category.General": "lɐɹǝuǝפ",
+
+  "yacl3.config.qoh:config.category.General.group.misc": "sƃuᴉʇʇǝs ɔsᴉW",
+  "yacl3.config.qoh:config.CanHorsesSwim": "¿ɯᴉʍs sǝsɹoɥ uɐƆ",
+  "yacl3.config.qoh:config.TwoPlayerRideEnabled": "¿ǝsɹoɥ ɐ uo ǝpᴉɹ sɹǝʎɐld (ᄅ) oʍʇ uɐƆ",
+
+  "yacl3.config.qoh:config.category.General.group.chest_settings": "sƃuᴉʇʇǝs ʇsǝɥƆ",
+  "yacl3.config.qoh:config.HorsesCanHaveChests": "(sʇsǝɥɔ ǝʌɐɥ sǝsɹoH) pǝlqɐuƎ",
+  "yacl3.config.qoh:config.inventoryColumns": "suɯnloɔ ʎɹoʇuǝʌuI",
+
+  "yacl3.config.qoh:config.category.General.group.follow_settings": "sƃuᴉʇʇǝs ʍolloℲ",
+  "yacl3.config.qoh:config.HorseFollowsOwner": "(ɹǝuʍo sʍolloɟ ǝsɹoH) pǝlqɐuƎ",
+  "yacl3.config.qoh:config.HorseStartsFollowingAt": "ʇɐ ƃuᴉʍolloɟ ʇɹɐʇS",
+  "yacl3.config.qoh:config.HorseStopsFollowingAt": "ʇɐ ƃuᴉʍolloɟ doʇS",
+  "yacl3.config.qoh:config.HorseFollowSpeedMult": "ɹǝᴉldᴉʇlnɯ pǝǝds ʍolloℲ",
+
+  "painting.qoh.how_hungry.title": "ʎɹƃunH ʍoH",
+  "painting.qoh.how_hungry.author": "uʍouʞu∩"
+}

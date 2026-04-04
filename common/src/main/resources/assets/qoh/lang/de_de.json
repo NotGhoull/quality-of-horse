@@ -1,0 +1,32 @@
+{
+  "item.qoh.owner_tag": "Besitzer-Tag",
+
+  "message.qoh.not_tamed_or_owner": "[QoH] Dieses Pferd is nicht gezähmt oder gehört dir nicht!",
+  "message.qoh.binding_error": "[QoH] Bund zum Pferd fehlgeschlagen! Check logs für details.",
+  "message.qoh.bound_success": "[QoH] zu Pferd %1$s gebunden",
+
+  "lore.qoh.not_bound": "An keinem Pferd gebunden",
+  "lore.qoh.bound_notice": "Gebundentes Pferd",
+  "lore.qoh.bound_to": "%1$s Pferd gebunden an: %2$s",
+  "lore.qoh.original_owner": "%1$s Vorheriger Besitzer: %2$s",
+  "lore.qoh.transfer_tip": "Um den Besitz zu übergeben, betätige die rechte Maustaste am Pferd als Besitzer, und dann den neuen Besitzer.",
+
+  "yacl3.config.qoh:config.category.General": "Allgemein",
+
+  "yacl3.config.qoh:config.category.General.group.misc": "Sonstige Einstellungen",
+  "yacl3.config.qoh:config.CanHorsesSwim": "Können Pferde schwimmen?",
+  "yacl3.config.qoh:config.TwoPlayerRideEnabled": "Können (2) Spieler auf einem Pferd reiten?",
+
+  "yacl3.config.qoh:config.category.General.group.chest_settings": "Truhe Einstellungen",
+  "yacl3.config.qoh:config.HorsesCanHaveChests": "Aktiviert (Pferde haben Truhen)",
+  "yacl3.config.qoh:config.inventoryColumns": "Inventar Säulen",
+
+  "yacl3.config.qoh:config.category.General.group.follow_settings": "Folge Einstellungen",
+  "yacl3.config.qoh:config.HorseFollowsOwner": "Aktiviert (Pferd folgt Besitzer)",
+  "yacl3.config.qoh:config.HorseStartsFollowingAt": "Folgt erst ab",
+  "yacl3.config.qoh:config.HorseStopsFollowingAt": "Folgt nicht mehr ab",
+  "yacl3.config.qoh:config.HorseFollowSpeedMult": "Folge schnelligkeit Multiplizierer",
+
+  "painting.qoh.how_hungry.title": "Wie Hungrig",
+  "painting.qoh.how_hungry.author": "Unbekannt"
+}
