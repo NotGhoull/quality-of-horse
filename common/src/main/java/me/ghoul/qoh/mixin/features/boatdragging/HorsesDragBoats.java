@@ -1,7 +1,7 @@
 package me.ghoul.qoh.mixin.features.boatdragging;
 
 import me.ghoul.qoh.Constants;
-import me.ghoul.qoh.qPlayerLeashData;
+import me.ghoul.qoh.interfaces.ILeashHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Leashable;
@@ -30,7 +30,7 @@ public abstract class HorsesDragBoats extends Animal implements Leashable {
             return;
         }
 
-        qPlayerLeashData data = (qPlayerLeashData) pLeashHolder;
+        ILeashHolder data = (ILeashHolder) pLeashHolder;
         if (data == null) {
             Constants.LOG.warn(
                     "Leash holder {} does not implement qPlayerLeashData, cannot set leash target"

@@ -18,6 +18,10 @@ public abstract class HorseFollowsOwner extends AbstractHorse {
     @Override
     protected void registerGoals() {
         super.registerGoals();
+        if (!Constants.CONFIG.HorseFollowsOwner) {
+            return;
+        }
+
         this.goalSelector.addGoal(
                 0,
                 new HorseFollowsOwnerGoal(

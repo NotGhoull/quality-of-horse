@@ -1,7 +1,7 @@
 package me.ghoul.qoh.mixin.features;
 
 import me.ghoul.qoh.Constants;
-import me.ghoul.qoh.qHorse;
+import me.ghoul.qoh.interfaces.IHorseFeature;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
@@ -25,7 +25,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Horse.class)
-public abstract class HorseCanHaveChestMixin extends AbstractHorse implements qHorse {
+public abstract class HorseCanHaveChestMixin extends AbstractHorse implements IHorseFeature {
     @Unique private static final EntityDataAccessor<Boolean> DATA_HAS_CHEST =
             SynchedEntityData.defineId(HorseCanHaveChestMixin.class, EntityDataSerializers.BOOLEAN);
 

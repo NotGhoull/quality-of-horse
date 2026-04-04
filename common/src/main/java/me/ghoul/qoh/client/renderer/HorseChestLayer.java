@@ -1,7 +1,7 @@
 package me.ghoul.qoh.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import me.ghoul.qoh.qHorse;
+import me.ghoul.qoh.interfaces.IHorseFeature;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -54,7 +54,7 @@ public class HorseChestLayer<T extends LivingEntity, M extends EntityModel<T>>
             float j,
             float k,
             float l) {
-        if (!((qHorse) entity).qoh$hasChest()) {
+        if (!((IHorseFeature) entity).qoh$hasChest()) {
             return;
         }
 
