@@ -1,6 +1,8 @@
 package me.ghoul.qoh.goals;
 
 import java.util.EnumSet;
+
+import me.ghoul.qoh.Constants;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -9,129 +11,114 @@ import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.PathType;
+import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 
 public class HorseFollowsOwnerGoal extends Goal {
+
     private final AbstractHorse horse;
+    private final PathNavigation navigation;
+    private final double speed;
+    private final float startDistance;
+    private final float stopDistance;
+    private final RandomSource random = RandomSource.create();
 
     private LivingEntity owner;
-    private final double speedModifier;
-    private final PathNavigation navigation;
-    private int timeToRecalcPath;
-    private final float stopDistance;
-    private final float startDistance;
-    private float oldWaterCost;
+    private int recalcPathCooldown;
 
-    protected final RandomSource random;
-
-    public HorseFollowsOwnerGoal(
-            AbstractHorse horse, double pSpeedModifier, float pStartDistance, float pStopDistance) {
+    public HorseFollowsOwnerGoal(AbstractHorse horse, double speed, float startDistance, float stopDistance) {
         this.horse = horse;
-        this.random = RandomSource.create();
-        this.speedModifier = pSpeedModifier;
         this.navigation = horse.getNavigation();
-        this.startDistance = pStartDistance;
-        this.stopDistance = pStopDistance;
+        this.speed = speed;
+        this.startDistance = startDistance;
+        this.stopDistance = stopDistance;
         this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
-        if (!(horse.getNavigation() instanceof GroundPathNavigation)
-                && !(horse.getNavigation() instanceof FlyingPathNavigation)) {
-            throw new IllegalArgumentException("Unsupported mob type for FollowOwnerGoal");
+
+        if (!(navigation instanceof GroundPathNavigation) && !(navigation instanceof FlyingPathNavigation)) {
+            throw new IllegalArgumentException("Unsupported navigation type for horse follow goal");
         }
     }
 
     @Override
     public boolean canUse() {
-        LivingEntity entity = this.horse.getOwner();
-        if (entity == null) {
-            return false;
-        } else if (this.unableToMoveToOwner()) {
-            return false;
-        } else if (this.horse.distanceToSqr(entity)
-                < (double) (this.startDistance * this.startDistance)) {
-            return false;
-        } else {
-            this.owner = entity;
-            return true;
-        }
+        owner = horse.getOwner();
+        return owner != null && isNotRiddenOrLeashed() && horse.distanceToSqr(owner) > startDistance * startDistance;
     }
 
-    public final boolean unableToMoveToOwner() {
-        return !this.horse.isLeashed() && this.horse.getVehicle() != null;
-    }
-
+    @Override
     public boolean canContinueToUse() {
-        if (this.navigation.isDone()) {
-            return false;
-        } else {
-            return !unableToMoveToOwner()
-                    && !(this.horse.distanceToSqr(this.owner)
-                            <= (double) (this.stopDistance * this.stopDistance));
-        }
+        return owner != null && isNotRiddenOrLeashed() &&
+                navigation.isInProgress() &&
+                horse.distanceToSqr(owner) > stopDistance * stopDistance;
     }
 
+    @Override
     public void start() {
-        this.timeToRecalcPath = 0;
-        this.oldWaterCost = this.horse.getPathfindingMalus(PathType.WATER);
-        this.horse.setPathfindingMalus(PathType.WATER, 0.0F);
+        recalcPathCooldown = 0;
     }
 
+    @Override
     public void stop() {
-        this.owner = null;
-        this.navigation.stop();
-        this.horse.setPathfindingMalus(PathType.WATER, this.oldWaterCost);
+        owner = null;
+        navigation.stop();
     }
 
+    @Override
     public void tick() {
-        boolean flag = shouldTryTeleportToOwner();
-        if (!flag) {
-            this.horse
-                    .getLookControl()
-                    .setLookAt(this.owner, 10.0F, (float) this.horse.getMaxHeadXRot());
-        }
+        if (owner == null) return;
 
-        if (--this.timeToRecalcPath <= 0) {
-            this.timeToRecalcPath = this.adjustedTickDelay(10);
-            if (flag) {
-                tryTeleportToOwner();
+        horse.getLookControl().setLookAt(owner, 10.0F, horse.getMaxHeadXRot());
+
+        if (--recalcPathCooldown <= 0) {
+            recalcPathCooldown = adjustedTickDelay(10);
+
+            if (shouldTeleportToOwner()) {
+                teleportNearOwner(owner.blockPosition());
             } else {
-                this.navigation.moveTo(this.owner, this.speedModifier);
+                navigation.moveTo(owner, speed);
             }
         }
     }
 
-    public boolean shouldTryTeleportToOwner() {
-        if (this.horse.isLeashed() || this.horse.getVehicle() != null) {
-            return false;
-        } else return !(this.horse.distanceToSqr(this.owner) < 200.0D);
+    private boolean isNotRiddenOrLeashed() {
+        return !horse.isLeashed() && horse.getVehicle() == null;
     }
 
-    public void tryTeleportToOwner() {
-        LivingEntity entity = this.horse.getOwner();
-        if (entity != null) {
-            // Get the position of the entity
-            BlockPos entityPos = entity.blockPosition();
-            Level level = entity.level();
+    private boolean shouldTeleportToOwner() {
+        return isNotRiddenOrLeashed() &&
+                horse.distanceToSqr(horse.getOwner()) >= Constants.CONFIG.TeleportWhenFurtherAwayThan;
+    }
 
-            // Find the closest solid block beneath the entity (up to a max search depth)
-            BlockPos targetPos = null;
-            for (int y = entityPos.getY(); y >= level.getMinBuildHeight(); y--) {
-                BlockPos checkPos = new BlockPos(entityPos.getX(), y, entityPos.getZ());
-                if (!level.getBlockState(checkPos).isAir()) {
-                    if (level.getBlockState(checkPos)
-                            .getCollisionShape(level, checkPos)
-                            .isEmpty()) {
-                        continue; // Skip blocks that don't have a collision shape
-                    }
-                    targetPos = checkPos.above(); // Found the closest non-air block
-                    break;
+    private void teleportNearOwner(BlockPos ownerPos) {
+        for (int attempt = 0; attempt < 10; attempt++) {
+            int xOffset = random.nextIntBetweenInclusive(-3, 3);
+            int zOffset = random.nextIntBetweenInclusive(-3, 3);
+            if (Math.abs(xOffset) >= 2 || Math.abs(zOffset) >= 2) {
+                int yOffset = random.nextIntBetweenInclusive(-1, 1);
+                if (tryTeleportTo(ownerPos.getX() + xOffset, ownerPos.getY() + yOffset, ownerPos.getZ() + zOffset)) {
+                    return;
                 }
             }
-
-            // If we found a valid block position beneath, teleport the horse there
-            if (targetPos != null) {
-                this.horse.teleportTo(entityPos.getX(), targetPos.getY(), entityPos.getZ());
-            }
         }
+    }
+
+    private boolean tryTeleportTo(int x, int y, int z) {
+        BlockPos targetPos = new BlockPos(x, y, z);
+        if (!canTeleportTo(targetPos)) return false;
+
+        horse.moveTo(x + 0.5, y, z + 0.5, horse.getYRot(), horse.getXRot());
+        navigation.stop();
+        return true;
+    }
+
+    private boolean canTeleportTo(BlockPos pos) {
+        if (WalkNodeEvaluator.getPathTypeStatic(horse, pos) != PathType.WALKABLE) return false;
+
+        BlockState below = horse.level().getBlockState(pos.below());
+        if (below.getBlock() instanceof LeavesBlock) return false;
+
+        return horse.level().noCollision(horse, horse.getBoundingBox().move(pos.subtract(horse.blockPosition())));
     }
 }

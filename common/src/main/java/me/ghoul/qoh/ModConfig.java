@@ -53,21 +53,27 @@ public class ModConfig {
     @CustomDescription("config.qoh.description.HorseFollowsOwner")
     public boolean HorseFollowsOwner = true;
 
-    @SerialEntry(comment = "How far away does the player need to be for the horse to start following them? Double that distance will cause the horse to teleport like a wolf or cat would")
+    @SerialEntry(comment = "How far away does the player need to be for the horse to start following them")
     @AutoGen(category = "General", group = "follow_settings")
     @FloatSlider(min = 0, max = 100, step = 1F, format = "%.1f blocks")
     @CustomDescription("config.qoh.description.HorseStartsFollowingAt")
-    public float HorseStartsFollowingAt = 10F;
+    public float HorseStartsFollowingAt = 14F;
 
     @SerialEntry(comment = "The distance a tamed horse will stop following you")
     @AutoGen(category = "General", group = "follow_settings")
     @FloatSlider(min = 0, max = 20, step = 1F, format = "%.1f blocks")
     @CustomDescription("config.qoh.description.HorseStopsFollowingAt")
-    public float HorseStopsFollowingAt = 2F;
+    public float HorseStopsFollowingAt = 5F;
 
     @SerialEntry(comment = "How much faster the horse will move when following the player")
     @AutoGen(category = "General", group = "follow_settings")
     @FloatSlider(min = 0, max = 20, step = 0.2F, format = "%.1f times faster")
     @CustomDescription("config.qoh.description.HorseFollowSpeedMult")
-    public float HorseFollowSpeedMult = 1.2F;
+    public float HorseFollowSpeedMult = 1.5F;
+
+    @SerialEntry(comment = "How many blocks (squared) the horse needs to be away from the player to teleport")
+    @AutoGen(category = "General", group = "follow_settings")
+    @DoubleField(format = "%.1f blocks^2")
+    @CustomDescription("config.qoh.description.HorseTeleportsWhenFurtherAwayThan")
+    public double TeleportWhenFurtherAwayThan = 400.F;
 }
