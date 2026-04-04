@@ -19,7 +19,7 @@ public class CommonClass {
             "qoh_tab",
             () -> CreativeTabRegistry.create(
                     Component.translatable("qoh.itemgroup.main"),
-                    () -> new ItemStack(Items.NAME_TAG)
+                    () -> new ItemStack(CommonClass.OWNER_TAG)
             )
     );
 
