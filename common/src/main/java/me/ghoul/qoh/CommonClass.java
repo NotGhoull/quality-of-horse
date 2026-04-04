@@ -24,7 +24,7 @@ public class CommonClass {
     );
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(Constants.MOD_ID, Registries.ITEM);
-    public static final RegistrySupplier<Item> OWNER_TAG = ITEMS.register("owner_tag", () -> new OwnerTagItem(new Item.Properties().component(ModComponents.TEST_COMPONENT.get(), "<null>").arch$tab(QOH_TAB)));
+    public static final RegistrySupplier<Item> OWNER_TAG = ITEMS.register("owner_tag", () -> new OwnerTagItem(new Item.Properties().component(ModComponents.HORSE_UUID_COMPONENT.get(), "<null>").arch$tab(QOH_TAB).stacksTo(1)));
 
     public static void init() {
         if (Services.PLATFORM.isModLoaded("yet_another_config_lib_v3")) {
