@@ -1,4 +1,5 @@
 {
+  "qoh.itemgroup.main": "Quality of Horse",
   "item.qoh.owner_tag": "Besitzer-Tag",
 
   "message.qoh.not_tamed_or_owner": "[QoH] Dieses Pferd is nicht gezähmt oder gehört dir nicht!",
@@ -26,7 +27,18 @@
   "yacl3.config.qoh:config.HorseStartsFollowingAt": "Folgt erst ab",
   "yacl3.config.qoh:config.HorseStopsFollowingAt": "Folgt nicht mehr ab",
   "yacl3.config.qoh:config.HorseFollowSpeedMult": "Folge schnelligkeit Multiplizierer",
+  "yacl3.config.qoh:config.TeleportWhenFurtherAwayThan": "Teleport when further away than",
 
-  "painting.qoh.how_hungry.title": "Wie Hungrig",
+  "config.qoh.description.CanHorsesSwim": "Wenn aktiviert, Pferde können schwimmen, auch wenn sie geritten werden. (Normalerweise sinkt das Pferd und man wird vom Pferd geschmissen, welches auch nicht mehr Passiert wenn aktiviert)",
+  "config.qoh.description.TwoPlayerRideEnabled": "Wenn aktiviert, Zwei Spieler können auf dasselbe Pferd sitzen.",
+  "config.qoh.description.HorsesCanHaveChests": "Wenn aktiviert, kann man mit einer Truhe auf ein Pferd die rechte Maustaste betätigen, um eine Truhe auf das Pferd zu legen. (Wie bei einem Esel oder Maultier). Rechte Maustaste mit einer Schere um sie zu entfernen.",
+  "config.qoh.description.inventoryColumns": "Setzt die Anzahl der Inventar-Säulen der Truhe vom Pferd.",
+  "config.qoh.description.HorseFollowsOwner": "Wenn aktiviert, Pferde weden automatisch ihren Besitzer folgen, wenn möglich. (Das Pferd wird auch teleportieren wie ein Hund)",
+  "config.qoh.description.HorseStartsFollowingAt": "Wie weit muss der Spieler sein bis das Pferd anfängt nachzukommen.",
+  "config.qoh.description.HorseStopsFollowingAt": "Die Distanz ab dem ein gezähmtes Pferd aufhört zu folgen.",
+  "config.qoh.description.HorseFollowSpeedMult": "Wie schnell das Pferd den Spieler verfolgt. Die Einstellung auf 1 zu lassen ändert nichts.",
+  "config.qoh.description.TeleportWhenFurtherAwayThan": "Wenn das Pferd weiter weg vom Spieler ist ab der angegebenen distanz, wird es sich zum Spieler teleportieren.",
+
+  "painting.qoh.how_hungry.title": "有多餓",
   "painting.qoh.how_hungry.author": "Unbekannt"
 }
