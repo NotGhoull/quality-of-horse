@@ -9,8 +9,6 @@ import dev.isxander.yacl3.config.v2.api.serializer.GsonConfigSerializerBuilder;
 import dev.isxander.yacl3.platform.YACLPlatform;
 import net.minecraft.resources.ResourceLocation;
 
-import java.awt.*;
-
 public class ModConfig {
     public static ConfigClassHandler<ModConfig> HANDLER = ConfigClassHandler.<ModConfig>createBuilder(ModConfig.class)
             .id(ResourceLocation.fromNamespaceAndPath("qoh", "config"))
@@ -21,19 +19,17 @@ public class ModConfig {
                     .build())
             .build();
 
-
-
     // Swimming
     @AutoGen(category = "General", group = "misc")
     @Boolean(formatter = Boolean.Formatter.YES_NO, colored = true)
-    @CustomDescription(value = "If enabled, horses can swim in water instead of sinking. (Note, you will not get kicked off of the horse when its underwater)")
+    @CustomDescription("config.qoh.description.CanHorsesSwim")
     @SerialEntry(comment = "If horses can swim when being ridden")
     public boolean CanHorsesSwim = true;
 
     // Horse two player ride
     @AutoGen(category = "General", group = "misc")
     @Boolean(formatter = Boolean.Formatter.YES_NO, colored = true)
-    @CustomDescription("If enabled, two players can ride the same horse.")
+    @CustomDescription("config.qoh.description.TwoPlayerRideEnabled")
     @SerialEntry(comment = "If two players can ride at the same time")
     public boolean TwoPlayerRideEnabled = true;
 
@@ -41,38 +37,43 @@ public class ModConfig {
     @SerialEntry(comment = "Whether horses can have chests")
     @MasterTickBox({"inventoryColumns"})
     @AutoGen(category = "General", group = "chest_settings")
-    @CustomDescription("If enabled, right-clicking a horse with a chest will let you put a chest on it (like a donkey or mule), right-click with shears to remove the chest")
-    @CustomImage(value = "textures/haschest.png", width = 32, height = 32)
+    @CustomDescription("config.qoh.description.HorsesCanHaveChests")
     public boolean HorsesCanHaveChests = true;
 
     @SerialEntry(comment = "How many inventory columns the chest has")
     @IntSlider(min = 0, max = 10, step = 1)
     @AutoGen(category = "General", group = "chest_settings")
-    @CustomDescription("Set the number of inventory columns the horse's chest will contain.")
+    @CustomDescription("config.qoh.description.inventoryColumns")
     public int inventoryColumns = 5;
 
 
+    @SerialEntry(comment = "If the horse follows their owner or not")
     @AutoGen(category = "General", group = "follow_settings")
     @MasterTickBox({"HorseStartsFollowingAt", "HorseStopsFollowingAt", "HorseFollowSpeedMult"})
-    @CustomDescription("If enabled, horses will automatically follow their owner whenever possible. (This will allow horses to teleport)")
-    @SerialEntry(comment = "If the horse follows their owner or not")
+    @CustomDescription("config.qoh.description.HorseFollowsOwner")
     public boolean HorseFollowsOwner = true;
 
+    @SerialEntry(comment = "How far away does the player need to be for the horse to start following them")
     @AutoGen(category = "General", group = "follow_settings")
     @FloatSlider(min = 0, max = 100, step = 1F, format = "%.1f blocks")
-    @SerialEntry(comment = "How far away does the player need to be for the horse to start following them? Double that distance will cause the horse to teleport like a wolf or cat would")
-    @CustomDescription("How far away the player needs to be for the horse to start following them")
-    public float HorseStartsFollowingAt = 10F;
+    @CustomDescription("config.qoh.description.HorseStartsFollowingAt")
+    public float HorseStartsFollowingAt = 14F;
 
+    @SerialEntry(comment = "The distance a tamed horse will stop following you")
     @AutoGen(category = "General", group = "follow_settings")
     @FloatSlider(min = 0, max = 20, step = 1F, format = "%.1f blocks")
-    @CustomDescription("The distance a tamed horse will stop following you")
-    @SerialEntry(comment = "The distance a tamed horse will stop following you")
-    public float HorseStopsFollowingAt = 2F;
+    @CustomDescription("config.qoh.description.HorseStopsFollowingAt")
+    public float HorseStopsFollowingAt = 5F;
 
+    @SerialEntry(comment = "How much faster the horse will move when following the player")
     @AutoGen(category = "General", group = "follow_settings")
     @FloatSlider(min = 0, max = 20, step = 0.2F, format = "%.1f times faster")
-    @CustomDescription("How much faster the horse will move when following the player. Setting this to 1 changes nothing.")
-    @SerialEntry(comment = "How much faster the horse will move when following the player")
-    public float HorseFollowSpeedMult = 1.2F;
+    @CustomDescription("config.qoh.description.HorseFollowSpeedMult")
+    public float HorseFollowSpeedMult = 1.5F;
+
+    @SerialEntry(comment = "How many blocks (squared) the horse needs to be away from the player to teleport")
+    @AutoGen(category = "General", group = "follow_settings")
+    @DoubleField(format = "%.1f blocks^2")
+    @CustomDescription("config.qoh.description.HorseTeleportsWhenFurtherAwayThan")
+    public double TeleportWhenFurtherAwayThan = 400.F;
 }

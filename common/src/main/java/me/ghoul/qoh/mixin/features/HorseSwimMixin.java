@@ -24,7 +24,7 @@ public abstract class HorseSwimMixin extends LivingEntity {
     @Unique private int qoh$swimTickCount = 0;
 
     @Inject(method = "tickRidden", at = @At(value = "TAIL"))
-    private void handleSwimming(Player player, Vec3 movement, CallbackInfo ci) {
+    private void handleSwimming(Player player, Vec3 vec3, CallbackInfo ci) {
         if (!Constants.CONFIG.CanHorsesSwim) {
             return;
         }

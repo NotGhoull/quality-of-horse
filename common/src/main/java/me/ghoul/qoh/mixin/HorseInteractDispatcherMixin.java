@@ -2,7 +2,7 @@
 package me.ghoul.qoh.mixin;
 
 import me.ghoul.qoh.Constants;
-import me.ghoul.qoh.qHorse;
+import me.ghoul.qoh.interfaces.IHorseFeature;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.animal.horse.Horse;
@@ -21,7 +21,7 @@ public class HorseInteractDispatcherMixin {
             Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
         ItemStack stack = player.getItemInHand(hand);
 
-        qHorse horse = (qHorse) this;
+        IHorseFeature horse = (IHorseFeature) this;
 
         Constants.LOG.info("Dispatching mob interact for horse");
         if (horse.dispatchMobInteract(player, stack)) {

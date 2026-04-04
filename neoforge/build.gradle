@@ -56,6 +56,7 @@ processResources {
                 version: version,
                 name: mod_name,
                 description: mod_description,
+                issues: issue_tracker,
                 home: homepage,
                 author: mod_author,
                 credits: credits,
@@ -66,6 +67,20 @@ processResources {
         )
     }
 }
+
+
+loom {
+    runs {
+        create("datagen") {
+            data()
+            programArgs("--all", "--mod", "$mod_id")
+            programArgs("--output", project(":common").file("src/main/generated/resources").absolutePath)
+            programArgs("--existing", project(":common").file("src/main/resources").absolutePath)
+            programArgs("datagen")
+        }
+    }
+}
+
 
 shadowJar {
     configurations = [project.configurations.shadowBundle]

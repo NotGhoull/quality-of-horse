@@ -1,5 +1,7 @@
 package me.ghoul.qoh;
 
+import me.ghoul.qoh.components.ModComponents;
+import me.ghoul.qoh.item.ModItems;
 import me.ghoul.qoh.platform.Services;
 
 public class CommonClass {
@@ -13,6 +15,9 @@ public class CommonClass {
             ModConfig.HANDLER.defaults();
             Constants.SetConfig(ModConfig.HANDLER.instance());
         }
+
+        ModComponents.COMPONENTS.register();
+        ModItems.init();
 
         Constants.LOG.info("Peter the horse is here");
     }

@@ -1,9 +1,9 @@
-package me.ghoul.qoh;
+package me.ghoul.qoh.interfaces;
 
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
-public interface qHorse {
+public interface IHorseFeature {
     boolean qoh$hasChest();
 
     default boolean qoh$tryTwoPlayerRide(Player player, ItemStack stack) {

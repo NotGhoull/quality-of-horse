@@ -1,8 +1,9 @@
 package me.ghoul.qoh.mixin.features;
 
 import me.ghoul.qoh.Constants;
+import me.ghoul.qoh.item.ModItems;
 import me.ghoul.qoh.mixin.accessor.AbstractHorseAccessor;
-import me.ghoul.qoh.qHorse;
+import me.ghoul.qoh.interfaces.IHorseFeature;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
@@ -16,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(Horse.class)
-public abstract class HorseTwoPlayerRideMixin extends AbstractHorse implements qHorse {
+public abstract class HorseTwoPlayerRideMixin extends AbstractHorse implements IHorseFeature {
 
     protected HorseTwoPlayerRideMixin(
             EntityType<? extends AbstractHorse> pEntityType, Level pLevel) {
@@ -27,7 +28,8 @@ public abstract class HorseTwoPlayerRideMixin extends AbstractHorse implements q
     public boolean qoh$tryTwoPlayerRide(Player player, ItemStack stack) {
         if (this.isTamed()
                 && this.getPassengers().size() < 2
-                && Constants.CONFIG.TwoPlayerRideEnabled) {
+                && Constants.CONFIG.TwoPlayerRideEnabled
+                && !stack.is(ModItems.OWNER_TAG)) {
             this.doPlayerRide(player);
             return true;
         }

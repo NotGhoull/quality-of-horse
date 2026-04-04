@@ -27,18 +27,7 @@
   "yacl3.config.qoh:config.HorseStartsFollowingAt": "Start following at",
   "yacl3.config.qoh:config.HorseStopsFollowingAt": "Stop following at",
   "yacl3.config.qoh:config.HorseFollowSpeedMult": "Follow speed multiplier",
-  "yacl3.config.qoh:config.TeleportWhenFurtherAwayThan": "Teleport when further away than",
 
-  "config.qoh.description.CanHorsesSwim": "If enabled, horses can swim in water instead of sinking. (Note, you will not get kicked off of the horse when its underwater)",
-  "config.qoh.description.TwoPlayerRideEnabled": "If enabled, two players can ride the same horse.",
-  "config.qoh.description.HorsesCanHaveChests": "If enabled, right-clicking a horse with a chest will let you put a chest on it (like a donkey or mule), right-click with shears to remove the chest",
-  "config.qoh.description.inventoryColumns": "Set the number of inventory columns the horse's chest will contain.",
-  "config.qoh.description.HorseFollowsOwner": "If enabled, horses will automatically follow their owner whenever possible. (This will allow horses to teleport)",
-  "config.qoh.description.HorseStartsFollowingAt": "How far away does the player need to be for the horse to start following them",
-  "config.qoh.description.HorseStopsFollowingAt": "The distance a tamed horse will stop following you",
-  "config.qoh.description.HorseFollowSpeedMult": "How much faster the horse will move when following the player. Setting this to 1 changes nothing.",
-  "config.qoh.description.TeleportWhenFurtherAwayThan": "If the horse is further away from the player than this distance, it will teleport to the player",
-
-  "painting.qoh.how_hungry.title": "How Hungry ",
+  "painting.qoh.how_hungry.title": "How Hungry",
   "painting.qoh.how_hungry.author": "Unknown"
 }

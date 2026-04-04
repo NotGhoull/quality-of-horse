@@ -1,0 +1,44 @@
+{
+  "qoh.itemgroup.main": "Quality of Horse",
+  "item.qoh.owner_tag": "Besitzer-Tag",
+
+  "message.qoh.not_tamed_or_owner": "[QoH] Dieses Pferd is nicht gezähmt oder gehört dir nicht!",
+  "message.qoh.binding_error": "[QoH] Bund zum Pferd fehlgeschlagen! Check logs für details.",
+  "message.qoh.bound_success": "[QoH] zu Pferd %1$s gebunden",
+
+  "lore.qoh.not_bound": "An keinem Pferd gebunden",
+  "lore.qoh.bound_notice": "Gebundentes Pferd",
+  "lore.qoh.bound_to": "%1$s Pferd gebunden an: %2$s",
+  "lore.qoh.original_owner": "%1$s Vorheriger Besitzer: %2$s",
+  "lore.qoh.transfer_tip": "Um den Besitz zu übergeben, betätige die rechte Maustaste am Pferd als Besitzer, und dann den neuen Besitzer.",
+
+  "yacl3.config.qoh:config.category.General": "Allgemein",
+
+  "yacl3.config.qoh:config.category.General.group.misc": "Sonstige Einstellungen",
+  "yacl3.config.qoh:config.CanHorsesSwim": "Können Pferde schwimmen?",
+  "yacl3.config.qoh:config.TwoPlayerRideEnabled": "Können (2) Spieler auf einem Pferd reiten?",
+
+  "yacl3.config.qoh:config.category.General.group.chest_settings": "Truhe Einstellungen",
+  "yacl3.config.qoh:config.HorsesCanHaveChests": "Aktiviert (Pferde haben Truhen)",
+  "yacl3.config.qoh:config.inventoryColumns": "Inventar Säulen",
+
+  "yacl3.config.qoh:config.category.General.group.follow_settings": "Folge Einstellungen",
+  "yacl3.config.qoh:config.HorseFollowsOwner": "Aktiviert (Pferd folgt Besitzer)",
+  "yacl3.config.qoh:config.HorseStartsFollowingAt": "Folgt erst ab",
+  "yacl3.config.qoh:config.HorseStopsFollowingAt": "Folgt nicht mehr ab",
+  "yacl3.config.qoh:config.HorseFollowSpeedMult": "Folge schnelligkeit Multiplizierer",
+  "yacl3.config.qoh:config.TeleportWhenFurtherAwayThan": "Teleport when further away than",
+
+  "config.qoh.description.CanHorsesSwim": "Wenn aktiviert, Pferde können schwimmen, auch wenn sie geritten werden. (Normalerweise sinkt das Pferd und man wird vom Pferd geschmissen, welches auch nicht mehr Passiert wenn aktiviert)",
+  "config.qoh.description.TwoPlayerRideEnabled": "Wenn aktiviert, Zwei Spieler können auf dasselbe Pferd sitzen.",
+  "config.qoh.description.HorsesCanHaveChests": "Wenn aktiviert, kann man mit einer Truhe auf ein Pferd die rechte Maustaste betätigen, um eine Truhe auf das Pferd zu legen. (Wie bei einem Esel oder Maultier). Rechte Maustaste mit einer Schere um sie zu entfernen.",
+  "config.qoh.description.inventoryColumns": "Setzt die Anzahl der Inventar-Säulen der Truhe vom Pferd.",
+  "config.qoh.description.HorseFollowsOwner": "Wenn aktiviert, Pferde weden automatisch ihren Besitzer folgen, wenn möglich. (Das Pferd wird auch teleportieren wie ein Hund)",
+  "config.qoh.description.HorseStartsFollowingAt": "Wie weit muss der Spieler sein bis das Pferd anfängt nachzukommen.",
+  "config.qoh.description.HorseStopsFollowingAt": "Die Distanz ab dem ein gezähmtes Pferd aufhört zu folgen.",
+  "config.qoh.description.HorseFollowSpeedMult": "Wie schnell das Pferd den Spieler verfolgt. Die Einstellung auf 1 zu lassen ändert nichts.",
+  "config.qoh.description.TeleportWhenFurtherAwayThan": "Wenn das Pferd weiter weg vom Spieler ist ab der angegebenen distanz, wird es sich zum Spieler teleportieren.",
+
+  "painting.qoh.how_hungry.title": "有多餓",
+  "painting.qoh.how_hungry.author": "Unbekannt"
+}

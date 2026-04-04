@@ -2,7 +2,7 @@ package me.ghoul.qoh.mixin.features.boatdragging;
 
 import me.ghoul.qoh.Constants;
 import me.ghoul.qoh.mixin.accessor.LeashDataAccessor;
-import me.ghoul.qoh.qPlayerLeashData;
+import me.ghoul.qoh.interfaces.ILeashHolder;
 import net.minecraft.network.protocol.game.ClientboundSetEntityLinkPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
@@ -63,7 +63,7 @@ public abstract class BoatCanAcceptHorseLeash extends Entity implements Leashabl
     private void interact(
             Player pPlayer, InteractionHand pHand, CallbackInfoReturnable<InteractionResult> cir) {
         // This is safe because we know pPlayer will implement it because of the mixin
-        qPlayerLeashData data = (qPlayerLeashData) pPlayer;
+        ILeashHolder data = (ILeashHolder) pPlayer;
         Entity owner = data.getLeashTargetEntity();
 
         if (owner != null) {
