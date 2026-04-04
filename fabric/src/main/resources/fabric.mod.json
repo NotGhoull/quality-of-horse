@@ -35,7 +35,15 @@
     "fabric-api": "*",
     "yet_another_config_lib_v3": ">=${yaci}"
   },
-  "suggests": {
-    "another-mod": "*"
+
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.modrinth": "https://modrinth.com/mod/quality-of-horse",
+        "modmenu.curseforge": "https://www.curseforge.com/minecraft/mc-mods/quality-of-horse",
+        "modmenu.discord": "discord.lieonlion.dev",
+        "modmenu.wiki": "https://gitlab.com/NotGhoull/quality-of-horse/-/wikis"
+      }
+    }
   }
 }

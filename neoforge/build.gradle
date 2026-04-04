@@ -56,6 +56,7 @@ processResources {
                 version: version,
                 name: mod_name,
                 description: mod_description,
+                issues: issue_tracker,
                 home: homepage,
                 author: mod_author,
                 credits: credits,

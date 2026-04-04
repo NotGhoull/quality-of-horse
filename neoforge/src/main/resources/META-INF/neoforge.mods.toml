@@ -1,6 +1,7 @@
 modLoader = "javafml"
 loaderVersion = "[2,)"
 license = "${license}"
+issueTrackerURL = "${issues}"
 
 [[mods]]
 modId = "qoh"
@@ -11,6 +12,7 @@ authors = "${author}"
 credits = "${credits}"
 description = '''${description}'''
 displayURL = "${home}"
+
 
 [[dependencies.qoh]]
 modId = "neoforge"

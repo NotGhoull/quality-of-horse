@@ -39,6 +39,6 @@
   "config.qoh.description.HorseFollowSpeedMult": "How much faster the horse will move when following the player. Setting this to 1 changes nothing.",
   "config.qoh.description.TeleportWhenFurtherAwayThan": "If the horse is further away from the player than this distance, it will teleport to the player",
 
-  "painting.qoh.how_hungry.title": "How Hungry",
+  "painting.qoh.how_hungry.title": "How Hungry ",
   "painting.qoh.how_hungry.author": "Unknown"
 }
