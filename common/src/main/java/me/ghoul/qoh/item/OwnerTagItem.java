@@ -40,7 +40,6 @@ public class OwnerTagItem extends Item {
             return InteractionResult.CONSUME;
         }
 
-        // Eventually we'd do logic for transferring ownership here, but for now we just pass
         return InteractionResult.PASS;
     }
 

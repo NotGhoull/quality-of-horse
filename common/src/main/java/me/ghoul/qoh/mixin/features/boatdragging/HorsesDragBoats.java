@@ -20,25 +20,12 @@ public abstract class HorsesDragBoats extends Animal implements Leashable {
 
     @Override
     public void setLeashedTo(Entity pLeashHolder, boolean pBroadcastPacket) {
-        Constants.LOG.info(
-                "setLeashedTo called for {}, leash holder: {}, broadcast: {}",
-                this.getClass().getName(),
-                pLeashHolder,
-                pBroadcastPacket);
         if (!(pLeashHolder instanceof Player)) {
             super.setLeashedTo(pLeashHolder, pBroadcastPacket);
             return;
         }
 
         ILeashHolder data = (ILeashHolder) pLeashHolder;
-        if (data == null) {
-            Constants.LOG.warn(
-                    "Leash holder {} does not implement qPlayerLeashData, cannot set leash target"
-                            + " entity",
-                    pLeashHolder);
-            super.setLeashedTo(pLeashHolder, pBroadcastPacket);
-            return;
-        }
 
         data.setLeashTargetEntity(this);
 

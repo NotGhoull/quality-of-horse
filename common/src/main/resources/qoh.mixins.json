@@ -3,11 +3,12 @@
   "package": "me.ghoul.qoh.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "HorseInteractDispatcherMixin",
+    "HorseMultiEventDispatcherMixin",
     "accessor.AbstractHorseAccessor",
     "accessor.LeashDataAccessor",
     "features.HorseCanHaveChestMixin",
     "features.HorseFollowsOwner",
+    "features.HorseFreeLeadMixin",
     "features.HorseSwimMixin",
     "features.HorseTwoPlayerRideMixin",
     "features.boatdragging.BoatCanAcceptHorseLeash",

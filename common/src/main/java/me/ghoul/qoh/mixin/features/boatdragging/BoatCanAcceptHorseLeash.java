@@ -1,6 +1,7 @@
 package me.ghoul.qoh.mixin.features.boatdragging;
 
 import me.ghoul.qoh.Constants;
+import me.ghoul.qoh.interfaces.IHorseFeature;
 import me.ghoul.qoh.mixin.accessor.LeashDataAccessor;
 import me.ghoul.qoh.interfaces.ILeashHolder;
 import net.minecraft.network.protocol.game.ClientboundSetEntityLinkPacket;
@@ -23,14 +24,13 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Boat.class)
-public abstract class BoatCanAcceptHorseLeash extends Entity implements Leashable {
+public abstract class BoatCanAcceptHorseLeash extends Entity implements Leashable, IHorseFeature {
 
     public BoatCanAcceptHorseLeash(EntityType<?> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
 
-    @Override
-    public void leashTooFarBehaviour() {
+    public void qoh$boatHandleLeashTooFarBehavior() {
         // Do nothing, we won't drop the leash here
         // Possible config? LeadsBreakWhenTooFar
 
@@ -52,6 +52,11 @@ public abstract class BoatCanAcceptHorseLeash extends Entity implements Leashabl
             this.setPos(leashHolder.getX(), leashHolder.getY(), leashHolder.getZ());
             this.setDeltaMovement(Vec3.ZERO);
         }
+    }
+
+    @Override
+    public void leashTooFarBehaviour() {
+        qoh$boatHandleLeashTooFarBehavior();
     }
 
     @Shadow
