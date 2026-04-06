@@ -25,8 +25,8 @@
   "lore.qoh.not_bound": "Not bound to any horse",
   "lore.qoh.original_owner": "%1$s Original owner: %2$s",
   "lore.qoh.transfer_tip": "To transfer ownership, right-click the horse as the owner, then right-click the new owner.",
+  
   "message.qoh.already_leashed": "[QoH] This horse already has a leashed unleash it first!",
-
   "message.qoh.bound_success": "[QoH] Bound to horse %1$s",
   "message.qoh.error.binding": "[QoH] Failed to bind to horse! Check logs for details.",
   "message.qoh.error.not_bound": "[QoH] This item is not bound to a horse!",
