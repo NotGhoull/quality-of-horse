@@ -7,6 +7,7 @@ import me.ghoul.qoh.Constants;
 import me.ghoul.qoh.components.ModComponents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentSerialization;
 import net.minecraft.network.chat.Style;
@@ -27,7 +28,10 @@ import java.util.UUID;
 
 public class OwnerTagItem extends Item {
     private static final Gson GSON = new Gson();
-    public OwnerTagItem(Properties properties) { super(properties); }
+
+    public OwnerTagItem(Properties properties) {
+        super(properties);
+    }
 
     @Override
     public @NotNull InteractionResult interactLivingEntity(ItemStack itemStack, Player player, LivingEntity livingEntity, InteractionHand interactionHand) {
@@ -45,13 +49,13 @@ public class OwnerTagItem extends Item {
 
     private void handlePlayerInteraction(ItemStack itemStack, Player sourcePlayer, Player targetPlayer) {
         if (sourcePlayer.level().isClientSide()) {
-            sourcePlayer.sendSystemMessage(Component.literal("Skipping because this is a client instance"));
             return;
         }
 
         var strUuid = itemStack.get(ModComponents.HORSE_UUID_COMPONENT.get());
-        if (strUuid == null) {
-            sourcePlayer.sendSystemMessage(Component.literal("This item is not bound to a horse!"));
+        // TODO: Remove the HORSE_UUID_COMPONENT from the item when its first created so we can use it not existing as its indicator
+        if (Objects.equals(strUuid, "<null>") || strUuid == null) {
+            sourcePlayer.displayClientMessage(Component.translatable("message.qoh.error.not_bound"), true);
             return;
         }
 
@@ -60,13 +64,29 @@ public class OwnerTagItem extends Item {
         ServerLevel level = (ServerLevel) sourcePlayer.level();
         Horse horse = (Horse) level.getEntity(horseUUID);
         if (horse == null) {
-            sourcePlayer.sendSystemMessage(Component.literal("The horse bound to this item could not be found!"));
+            sourcePlayer.sendSystemMessage(Component.translatable("message.qoh.error.not_found"));
             return;
         }
 
-        // TODO: Draw particles from player 1 to player 2 and the horse to make it more clear that something is happening
+        var horseNameStyle = Style.EMPTY.withItalic(true).withColor(ChatFormatting.AQUA);
+        var playerNameGreen = Style.EMPTY.withBold(true).withColor(ChatFormatting.GREEN);
+        var playerNameGold = Style.EMPTY.withBold(true).withColor(ChatFormatting.GOLD);
+        var messageStyle = Style.EMPTY.withItalic(true).withColor(ChatFormatting.GRAY);
+
         horse.setOwnerUUID(targetPlayer.getUUID());
-        targetPlayer.sendSystemMessage(Component.literal("[QoH] {} has given you {}!".formatted(sourcePlayer.getName().getString(), horse.getName().getString())));
+        showTransferParticles(sourcePlayer, targetPlayer, horse);
+        targetPlayer.sendSystemMessage(Component.translatable("message.qoh.horse_recipient",
+                sourcePlayer.getName().copy().withStyle(playerNameGold),
+                horse.getName().copy().withStyle(horseNameStyle)
+        ).withStyle(messageStyle));
+
+        sourcePlayer.sendSystemMessage(Component.translatable(
+                "message.qoh.horse_giver",
+                Component.translatable("qoh.generic.you").withStyle(playerNameGreen),
+                horse.getName().copy().withStyle(horseNameStyle),
+                targetPlayer.getName().copy().withStyle(playerNameGreen)
+                ).withStyle(messageStyle));
+
         itemStack.consume(1, sourcePlayer);
     }
 
@@ -82,9 +102,12 @@ public class OwnerTagItem extends Item {
         }
 
         if (!bindHorseToItem(itemStack, horse)) {
-            player.displayClientMessage(Component.translatable("message.qoh.binding_error"), false);
+            player.displayClientMessage(Component.translatable("message.qoh.error.binding"), false);
             return InteractionResult.FAIL;
         }
+
+        ServerLevel level = (ServerLevel) player.level();
+        level.sendParticles(ParticleTypes.END_ROD, horse.getX(), horse.getY() + horse.getBbHeight() / 2, horse.getZ(), 20, 0.5, 0.5, 0.5, 0.1);
 
         player.displayClientMessage(Component.translatable("message.qoh.bound_success", horse.getName()), true);
         return InteractionResult.SUCCESS;
@@ -127,6 +150,20 @@ public class OwnerTagItem extends Item {
         return true;
     }
 
+    private void showTransferParticles(Player sourcePlayer, Player targetPlayer, Horse horse) {
+        ServerLevel level = (ServerLevel) sourcePlayer.level();
+        double x1 = sourcePlayer.getX(), y1 = sourcePlayer.getY() + sourcePlayer.getBbHeight() / 2, z1 = sourcePlayer.getZ();
+        double x2 = targetPlayer.getX(), y2 = targetPlayer.getY() + targetPlayer.getBbHeight() / 2, z2 = targetPlayer.getZ();
+
+        for (int i = 0; i < 10; i++) {
+            double t = i / 10.0;
+            double x = x1 + (x2 - x1) * t;
+            double y = y1 + (y2 - y1) * t;
+            double z = z1 + (z2 - z1) * t;
+
+            level.sendParticles(ParticleTypes.HAPPY_VILLAGER, x, y, z, 1, 0, 0, 0, 0);
+        }
+    }
 
     @Override
     public void appendHoverText(ItemStack itemStack, TooltipContext tooltipContext, List<Component> list, TooltipFlag tooltipFlag) {
@@ -154,12 +191,12 @@ public class OwnerTagItem extends Item {
                                         Style.EMPTY
                                                 .withBold(true)
                                                 .withColor(ChatFormatting.WHITE)))
-                        .withStyle(
-                                Style.EMPTY
-                                        .withColor(ChatFormatting.GREEN)));
+                .withStyle(
+                        Style.EMPTY
+                                .withColor(ChatFormatting.GREEN)));
 
         list.add(Component.translatable(
-                "lore.qoh.original_owner", " ┗",
+                        "lore.qoh.original_owner", " ┗",
                         ownerNameComponent.copy()
                                 .withStyle(Style.EMPTY
                                         .withBold(true)

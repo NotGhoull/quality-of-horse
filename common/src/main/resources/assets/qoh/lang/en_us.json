@@ -2,9 +2,15 @@
   "qoh.itemgroup.main": "Quality of Horse",
   "item.qoh.owner_tag": "Owner Tag",
 
+  "qoh.generic.you": "You",
+
   "message.qoh.not_tamed_or_owner": "[QoH] This horse is not tamed or you are not the owner!",
-  "message.qoh.binding_error": "[QoH] Failed to bind to horse! Check logs for details.",
+  "message.qoh.error.not_bound": "[QoH] This item is not bound to a horse!",
+  "message.qoh.error.binding": "[QoH] Failed to bind to horse! Check logs for details.",
+  "message.qoh.error.not_found": "[QoH] The horse bound to this item could not be found!",
   "message.qoh.bound_success": "[QoH] Bound to horse %1$s",
+  "message.qoh.horse_recipient": "[QoH] %1$s has given you %2$s!",
+  "message.qoh.horse_giver": "[QoH] %1$s have given %2$s to %3$s!",
 
   "lore.qoh.not_bound": "Not bound to any horse",
   "lore.qoh.bound_notice": "Bound horse",

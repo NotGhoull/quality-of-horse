@@ -3,7 +3,7 @@
   "item.qoh.owner_tag": "Besitzer-Tag",
 
   "message.qoh.not_tamed_or_owner": "[QoH] Dieses Pferd is nicht gezähmt oder gehört dir nicht!",
-  "message.qoh.binding_error": "[QoH] Bund zum Pferd fehlgeschlagen! Check logs für details.",
+  "message.qoh.error.binding": "[QoH] Bund zum Pferd fehlgeschlagen! Check logs für details.",
   "message.qoh.bound_success": "[QoH] zu Pferd %1$s gebunden",
 
   "lore.qoh.not_bound": "An keinem Pferd gebunden",

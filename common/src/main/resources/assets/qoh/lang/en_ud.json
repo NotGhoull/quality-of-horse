@@ -3,7 +3,7 @@
   "item.qoh.owner_tag": "ƃɐ┴ ɹǝuʍO",
 
   "message.qoh.not_tamed_or_owner": "¡ɹǝuʍo ǝɥʇ ʇou ǝɹɐ noʎ ɹo pǝɯɐʇ ʇou sᴉ ǝsɹoɥ sᴉɥ┴ [HoQ]",
-  "message.qoh.binding_error": "˙slᴉɐʇǝp ɹoɟ sƃol ʞɔǝɥƆ ¡ǝsɹoɥ oʇ puᴉq oʇ pǝlᴉɐℲ [HoQ]",
+  "message.qoh.error.binding": "˙slᴉɐʇǝp ɹoɟ sƃol ʞɔǝɥƆ ¡ǝsɹoɥ oʇ puᴉq oʇ pǝlᴉɐℲ [HoQ]",
   "message.qoh.bound_success": "s$1% ǝsɹoɥ oʇ punoq [HoQ]",
 
   "lore.qoh.not_bound": "ǝsɹoɥ ʎuɐ oʇ punoq ʇoN",
