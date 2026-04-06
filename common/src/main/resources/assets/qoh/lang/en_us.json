@@ -1,50 +1,49 @@
 {
-  "qoh.itemgroup.main": "Quality of Horse",
+  "config.qoh.CanHorsesSwim.description": "If enabled, horses can swim in water instead of sinking. (Note, you will not get kicked off of the horse when its underwater)",
+  "config.qoh.CanHorsesSwim.name": "Can horses swim?",
+  "config.qoh.HorseFollowSpeedMult.description": "How much faster the horse will move when following the player. Setting this to 1 changes nothing.",
+  "config.qoh.HorseFollowSpeedMult.name": "Follow speed multiplier",
+  "config.qoh.HorseFollowsOwner.description": "If enabled, horses will automatically follow their owner whenever possible. (This will allow horses to teleport)",
+  "config.qoh.HorseFollowsOwner.name": "Enabled (Horse follows owner)",
+  "config.qoh.HorseStartsFollowingAt.description": "How far away does the player need to be for the horse to start following them",
+  "config.qoh.HorseStartsFollowingAt.name": "Start following at",
+  "config.qoh.HorseStopsFollowingAt.description": "The distance a tamed horse will stop following you",
+  "config.qoh.HorseStopsFollowingAt.name": "Stop following at",
+  "config.qoh.HorsesCanHaveChests.description": "If enabled, right-clicking a horse with a chest will let you put a chest on it (like a donkey or mule), right-click with shears to remove the chest",
+  "config.qoh.HorsesCanHaveChests.name": "Enabled (Horses have chests)",
+  "config.qoh.TeleportWhenFurtherAwayThan.description": "If the horse is further away from the player than this distance, it will teleport to the player",
+  "config.qoh.TeleportWhenFurtherAwayThan.name": "Teleport when further away than",
+  "config.qoh.TwoPlayerRideEnabled.description": "If enabled, two players can ride the same horse.",
+  "config.qoh.TwoPlayerRideEnabled.name": "Can two (2) players ride on a horse?",
+  "config.qoh.inventoryColumns.description": "Set the number of inventory columns the horse's chest will contain.",
+  "config.qoh.inventoryColumns.name": "Inventory columns",
+
   "item.qoh.owner_tag": "Owner Tag",
+
+  "lore.qoh.bound_notice": "Bound horse",
+  "lore.qoh.bound_to": "%1$s Bound to horse: %2$s",
+  "lore.qoh.not_bound": "Not bound to any horse",
+  "lore.qoh.original_owner": "%1$s Original owner: %2$s",
+  "lore.qoh.transfer_tip": "To transfer ownership, right-click the horse as the owner, then right-click the new owner.",
+  "message.qoh.already_leashed": "[QoH] This horse already has a leashed unleash it first!",
+
+  "message.qoh.bound_success": "[QoH] Bound to horse %1$s",
+  "message.qoh.error.binding": "[QoH] Failed to bind to horse! Check logs for details.",
+  "message.qoh.error.not_bound": "[QoH] This item is not bound to a horse!",
+  "message.qoh.error.not_found": "[QoH] The horse bound to this item could not be found!",
+  "message.qoh.horse_giver": "[QoH] %1$s have given %2$s to %3$s!",
+  "message.qoh.horse_recipient": "[QoH] %1$s has given you %2$s!",
+  "message.qoh.not_tamed_or_owner": "[QoH] This horse is not tamed or you are not the owner!",
+
+  "painting.qoh.how_hungry.author": "Unknown",
+  "painting.qoh.how_hungry.title": "How Hungry",
 
   "qoh.generic.you": "You",
 
-  "message.qoh.not_tamed_or_owner": "[QoH] This horse is not tamed or you are not the owner!",
-  "message.qoh.error.not_bound": "[QoH] This item is not bound to a horse!",
-  "message.qoh.error.binding": "[QoH] Failed to bind to horse! Check logs for details.",
-  "message.qoh.error.not_found": "[QoH] The horse bound to this item could not be found!",
-  "message.qoh.bound_success": "[QoH] Bound to horse %1$s",
-  "message.qoh.horse_recipient": "[QoH] %1$s has given you %2$s!",
-  "message.qoh.horse_giver": "[QoH] %1$s have given %2$s to %3$s!",
-
-  "lore.qoh.not_bound": "Not bound to any horse",
-  "lore.qoh.bound_notice": "Bound horse",
-  "lore.qoh.bound_to": "%1$s Bound to horse: %2$s",
-  "lore.qoh.original_owner": "%1$s Original owner: %2$s",
-  "lore.qoh.transfer_tip": "To transfer ownership, right-click the horse as the owner, then right-click the new owner.",
+  "qoh.itemgroup.main": "Quality of Horse",
 
   "yacl3.config.qoh:config.category.General": "General",
-
-  "yacl3.config.qoh:config.category.General.group.misc": "Misc settings",
-  "yacl3.config.qoh:config.CanHorsesSwim": "Can horses swim?",
-  "yacl3.config.qoh:config.TwoPlayerRideEnabled": "Can two (2) players ride on a horse?",
-
   "yacl3.config.qoh:config.category.General.group.chest_settings": "Chest settings",
-  "yacl3.config.qoh:config.HorsesCanHaveChests": "Enabled (Horses have chests)",
-  "yacl3.config.qoh:config.inventoryColumns": "Inventory columns",
-
   "yacl3.config.qoh:config.category.General.group.follow_settings": "Follow settings",
-  "yacl3.config.qoh:config.HorseFollowsOwner": "Enabled (Horse follows owner)",
-  "yacl3.config.qoh:config.HorseStartsFollowingAt": "Start following at",
-  "yacl3.config.qoh:config.HorseStopsFollowingAt": "Stop following at",
-  "yacl3.config.qoh:config.HorseFollowSpeedMult": "Follow speed multiplier",
-  "yacl3.config.qoh:config.TeleportWhenFurtherAwayThan": "Teleport when further away than",
-
-  "config.qoh.description.CanHorsesSwim": "If enabled, horses can swim in water instead of sinking. (Note, you will not get kicked off of the horse when its underwater)",
-  "config.qoh.description.TwoPlayerRideEnabled": "If enabled, two players can ride the same horse.",
-  "config.qoh.description.HorsesCanHaveChests": "If enabled, right-clicking a horse with a chest will let you put a chest on it (like a donkey or mule), right-click with shears to remove the chest",
-  "config.qoh.description.inventoryColumns": "Set the number of inventory columns the horse's chest will contain.",
-  "config.qoh.description.HorseFollowsOwner": "If enabled, horses will automatically follow their owner whenever possible. (This will allow horses to teleport)",
-  "config.qoh.description.HorseStartsFollowingAt": "How far away does the player need to be for the horse to start following them",
-  "config.qoh.description.HorseStopsFollowingAt": "The distance a tamed horse will stop following you",
-  "config.qoh.description.HorseFollowSpeedMult": "How much faster the horse will move when following the player. Setting this to 1 changes nothing.",
-  "config.qoh.description.TeleportWhenFurtherAwayThan": "If the horse is further away from the player than this distance, it will teleport to the player",
-
-  "painting.qoh.how_hungry.title": "How Hungry ",
-  "painting.qoh.how_hungry.author": "Unknown"
+  "yacl3.config.qoh:config.category.General.group.misc": "Misc settings"
 }

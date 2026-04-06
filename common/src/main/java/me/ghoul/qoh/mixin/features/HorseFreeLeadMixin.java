@@ -32,10 +32,9 @@ public abstract class HorseFreeLeadMixin extends AbstractHorse implements IHorse
         if (this.isTamed() && player.isCrouching() && stack.isEmpty()) {
             if (!player.level().isClientSide()) {
                 if (getLeashData() != null) {
-                    // TODO: Translatable message
                     player.displayClientMessage(
-                            Component.literal(
-                                    "[QoH] This horse already has a leash, unleash it first!"),
+                            Component.translatable(
+                                    "message.qoh.already_leashed"),
                             true);
                     return InteractionResult.SUCCESS;
                 }
