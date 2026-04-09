@@ -11,6 +11,7 @@
     "features.HorseFollowsOwner",
     "features.HorseFreeLeadMixin",
     "features.HorseSwimMixin",
+    "features.HorseTamingStatMixin",
     "features.HorseTwoPlayerRideMixin",
     "features.boatdragging.BoatCanAcceptHorseLeash",
     "features.boatdragging.HorsesDragBoats",

@@ -23,6 +23,7 @@ public class Main {
 
     public Main(IEventBus eventBus) {
         CommonClass.init();
+        eventBus.addListener(this::modifyDefaultAttributes);
 
         ModLoadingContext.get()
             .registerExtensionPoint(
@@ -32,11 +33,19 @@ public class Main {
                         ModConfig.HANDLER.generateGui().generateScreen(parent));
     }
 
-    @SubscribeEvent
-    public static void modifyDefaultAttributes(EntityAttributeModificationEvent event) {
+    public void modifyDefaultAttributes(EntityAttributeModificationEvent event) {
+        Constants.LOG.info("Added horse taming attribute to players");
         event.add(
             EntityType.PLAYER,
             ModAttributes.HORSE_TAMING
         );
+
+        if (event.has(EntityType.PLAYER, ModAttributes.HORSE_TAMING)) {
+            Constants.LOG.info("Success!");
+        }else {
+            Constants.LOG.info("Failed to add");
+        }
     }
+
+
 }

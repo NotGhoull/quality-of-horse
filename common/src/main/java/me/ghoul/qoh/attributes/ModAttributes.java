@@ -15,7 +15,7 @@ import net.minecraft.world.entity.ai.attributes.RangedAttribute;
 public class ModAttributes {
     private static final DeferredRegister<Attribute> ATTRIBUTES = DeferredRegister.create(Constants.MOD_ID, Registries.ATTRIBUTE);
 
-    public static Holder<Attribute> HORSE_TAMING = register("horse_taming", (new RangedAttribute("attribute.qoh.horse_taming", 1, 0, 25).setSyncable(true)));
+    public static Holder<Attribute> HORSE_TAMING = register("horse_taming", (new RangedAttribute("attribute.qoh.horse_taming", 0, -100, 100).setSyncable(true)));
 
     public static void init() {
         if (Platform.isNeoForge()) {

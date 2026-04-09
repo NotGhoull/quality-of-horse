@@ -18,4 +18,5 @@ public class PlayerMixin {
             cir.getReturnValue().add(ModAttributes.HORSE_TAMING);
         }
     }
+
 }
