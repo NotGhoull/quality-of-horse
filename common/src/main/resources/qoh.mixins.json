@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "HorseMultiEventDispatcherMixin",
+    "PlayerMixin",
     "accessor.AbstractHorseAccessor",
     "accessor.LeashDataAccessor",
     "features.HorseCanHaveChestMixin",
