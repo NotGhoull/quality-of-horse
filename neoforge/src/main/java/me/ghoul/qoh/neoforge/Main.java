@@ -39,12 +39,6 @@ public class Main {
             EntityType.PLAYER,
             ModAttributes.HORSE_TAMING
         );
-
-        if (event.has(EntityType.PLAYER, ModAttributes.HORSE_TAMING)) {
-            Constants.LOG.info("Success!");
-        }else {
-            Constants.LOG.info("Failed to add");
-        }
     }
 
 

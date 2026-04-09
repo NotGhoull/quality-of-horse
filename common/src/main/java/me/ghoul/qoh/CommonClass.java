@@ -1,5 +1,6 @@
 package me.ghoul.qoh;
 
+import me.ghoul.qoh.alchemy.ModEffects;
 import me.ghoul.qoh.attributes.ModAttributes;
 import me.ghoul.qoh.components.ModComponents;
 import me.ghoul.qoh.item.ModItems;
@@ -20,6 +21,7 @@ public class CommonClass {
         ModComponents.COMPONENTS.register();
         ModItems.init();
         ModAttributes.init();
+        ModEffects.init();
 
         Constants.LOG.info("Peter the horse is here");
     }

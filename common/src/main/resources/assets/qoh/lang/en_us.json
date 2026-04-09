@@ -19,6 +19,9 @@
   "config.qoh.inventoryColumns.name": "Inventory columns",
 
   "item.qoh.owner_tag": "Owner Tag",
+  "item.minecraft.potion.effect.horse_taming": "Potion of Horse Taming",
+  "attribute.qoh.horse_taming": "Horse Taming",
+  "effect.qoh.horse_taming": "Horse Taming",
 
   "lore.qoh.bound_notice": "Bound horse",
   "lore.qoh.bound_to": "%1$s Bound to horse: %2$s",
